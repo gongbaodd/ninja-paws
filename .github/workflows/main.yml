@@ -45,7 +45,7 @@ jobs:
         uses: robpc/itchio-upload-action@v1
         with:
           path: build/WebGL/WebGL
-          project: gongbaodd/ninja-paws
+          project: gongbaodd/ghostly-paws
           channel: html5
           api-key: ${{ secrets.ITCHIO_API_KEY }}
 
@@ -62,4 +62,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✅ The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.\n Commit message: ${{ github.event.head_commit.message }}\n repository URL: ${{ github.event.repository.url }}\n website URL: https://buckb1ck.itch.io/ghostly-paws"
+          args: "✅ The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.\n Commit message: ${{ github.event.head_commit.message }}\n repository URL: ${{ github.event.repository.url }}\n website URL: https://gongbaodd.itch.io/ninja-paws"
