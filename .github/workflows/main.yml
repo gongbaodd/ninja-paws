@@ -1,0 +1,65 @@
+name: Actions 😎
+
+on:
+  push:
+    branches:
+      - main
+    paths: 
+      - 'ninja-paws/**'
+      - '.github/workflows/main.yml'
+
+jobs:
+  build:
+    name: Build my project ✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      # Cache
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ninja-paws/Assets
+            ninja-paws/Packages
+            ninja-paws/ProjectSettings
+          key: Library-${{ hashFiles('ninja-paws/Assets/**', 'ninja-paws/Packages/**', 'ninja-paws/ProjectSettings/**') }}
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          projectPath: ninja-paws
+          allowDirtyBuild: true
+
+      # Upload to itch.io
+      - name: Upload to itch.io project
+        uses: robpc/itchio-upload-action@v1
+        with:
+          path: build/WebGL/WebGL
+          project: gongbaodd/ninja-paws
+          channel: html5
+          api-key: ${{ secrets.ITCHIO_API_KEY }}
+
+      # Output
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build
+          path: build
+
+      # Send Notification
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "✅ The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.\n Commit message: ${{ github.event.head_commit.message }}\n repository URL: ${{ github.event.repository.url }}\n website URL: https://buckb1ck.itch.io/ghostly-paws"
