@@ -4,23 +4,18 @@ using UnityEngine;
 namespace Assets.Scenes.FruitNinja.Scripts
 {
 
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(GetManager))]
     public class FruitController : MonoBehaviour
     {
         private Rigidbody rb;
-        private GameObject gameManager;
+        protected GameObject gameManager;
 
         [SerializeField] private Spawnables config;
 
         public event System.Action<Vector2> OnFruitDestroyed;
-        void Start()
+        protected virtual void Start()
         {
-            gameManager = GameObject.FindWithTag("GameController");
-
-            if (gameManager == null)
-            {
-                throw new System.Exception("GameManager not found in the scene. Please add a GameManager object with the 'GameController' tag.");
-            }
+            gameManager = GetComponent<GetManager>().GameManager;
 
             if (config == null)
             {
@@ -41,7 +36,7 @@ namespace Assets.Scenes.FruitNinja.Scripts
             return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
         }
 
-        void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {

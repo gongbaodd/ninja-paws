@@ -8,8 +8,9 @@ namespace Assets.Scenes.FruitNinja.Scripts
     {
         public List<GameObject> fruits;
         public List<GameObject> bombs;
-        public GameObject poofPrefab;
 
+        public GameObject chestPrefab;
+        public GameObject poofPrefab;
         public GameObject boomPrefab;
         public float spawnHeight = -5f;
         public float spawnWidth = 10f;
@@ -17,6 +18,10 @@ namespace Assets.Scenes.FruitNinja.Scripts
 
         public float bombWeight = 50;
         public float fruitWeight = 50;
+
+        public float timeInSeconds = 60f;
+
+        public float showCountDownTime = 5f;
     }
 
 }

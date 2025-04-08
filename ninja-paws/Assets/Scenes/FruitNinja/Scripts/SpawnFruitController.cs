@@ -10,7 +10,11 @@ namespace Assets.Scenes.FruitNinja.Scripts
 
         [SerializeField] private GameConfig config;
 
+        public GameConfig Config => config;
+
         private bool keepSpawning = true;
+
+        private IEnumerator spawnHandler;
 
         public Vector2 CalculateForceDirection(Vector2 fruitPos)
         {
@@ -75,9 +79,23 @@ namespace Assets.Scenes.FruitNinja.Scripts
             Destroy(boom, 1f);
         }
 
+        private void StopSpawning()
+        {
+            keepSpawning = false;
+            StopCoroutine(spawnHandler);
+        }
+
         void Start()
         {
-            StartCoroutine(SpawnFruitRoutine());
+            spawnHandler = SpawnFruitRoutine();
+            StartCoroutine(spawnHandler);
+
+            TimerController.OnTimerEnd += StopSpawning;
+        }
+
+        void OnDestroy()
+        {
+            TimerController.OnTimerEnd -= StopSpawning;
         }
     }
 }
