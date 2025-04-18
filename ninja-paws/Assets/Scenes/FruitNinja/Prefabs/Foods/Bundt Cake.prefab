@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6580183224416500935}
   - component: {fileID: 688317555117518633}
   - component: {fileID: 1121993632762427762}
+  - component: {fileID: 2095075081617156913}
   m_Layer: 0
   m_Name: Bundt Cake
   m_TagString: Untagged
@@ -172,3 +173,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.53736496
   m_Center: {x: -0.000009924173, y: 0.20741266, z: -0.000075072065}
+--- !u!114 &2095075081617156913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9202213669791461189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0939e945b0bff714f89fdd94a8f6fbe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
