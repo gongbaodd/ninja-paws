@@ -1,0 +1,12 @@
+.sidebar {
+    flex-grow: 0;
+    width: 300px;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+.panel {
+    flex-grow: 1;
+    flex-direction: row;
+    background-image: resource('Start');
+}

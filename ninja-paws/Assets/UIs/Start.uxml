@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIs/Start.uss?fileID=7433441132597879392&amp;guid=a6af540bfa5baf74ca2adad19eb84f21&amp;type=3#Start" />
+    <engine:VisualElement name="panel" class="panel">
+        <engine:VisualElement name="sidebar" class="sidebar">
+            <engine:Button text="Play" name="playButton" />
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1;" />
+    </engine:VisualElement>
+</engine:UXML>
