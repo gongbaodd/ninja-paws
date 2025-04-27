@@ -2,7 +2,7 @@
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using System.Collections.Concurrent; // For thread-safe queue
-using UnityEngine.UI; // If using UI for virtual cursor
+// using UnityEngine.UI; // No longer needed for the cursor itself
 
 // Define a class to hold the received data
 [System.Serializable]
@@ -38,17 +38,25 @@ public class HandTrackingBehavior : WebSocketBehavior {
 // The main MonoBehaviour that sets up the server and processes data
 public class HandTrackingReceiver : MonoBehaviour {
     public int port = 8080; // Must match the JS client
-    public RectTransform virtualCursor; // Assign a UI Image's RectTransform in the Inspector
-    public float smoothingFactor = 0.2f; // Adjust for smoother cursor movement (0=no smooth, 1=no move)
+    public GameObject virtualCursor; // Assign a GameObject (e.g., a Sprite or 3D model) in the Inspector
+    public float smoothingFactor = 0.2f; // Adjust for smoother cursor movement (smaller value = smoother, slower; >0)
+    public float cursorDistanceFromCamera = 10f; // How far in front of the camera the cursor should appear
 
-    public static Vector2 NormalizedHandPosition { get; private set; } // Static property other scripts can read
+    public static Vector2 NormalizedHandPosition { get; private set; } // Static property other scripts can read (0,0 bottom-left to 1,1 top-right)
     public static bool IsClickDetectedThisFrame { get; private set; } // Static property for click
 
     private WebSocketServer wsServer;
     private ConcurrentQueue<string> messageQueue = new ConcurrentQueue<string>(); // Thread-safe queue
-    private Vector2 targetCursorPos; // Target position for smoothing
+    private Vector2 targetScreenPos; // Target position in Screen Coordinates
+    private Camera mainCamera; // Cache the main camera
 
     void Start() {
+        // Cache the main camera
+        mainCamera = Camera.main;
+        if (mainCamera == null) {
+            Debug.LogError("Could not find Main Camera in the scene. Please ensure a camera is tagged 'MainCamera'.", this);
+        }
+
         // Subscribe to the event from the WebSocketBehavior
         HandTrackingBehavior.OnDataReceived += HandleWebSocketMessage;
 
@@ -67,10 +75,9 @@ public class HandTrackingReceiver : MonoBehaviour {
             Debug.LogError($"Failed to start WebSocket server: {ex.Message}");
         }
 
-        // Initialize target position
-        if (virtualCursor != null) {
-            targetCursorPos = virtualCursor.anchoredPosition;
-        }
+        // Initialize target screen position (e.g., center)
+        targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
         NormalizedHandPosition = Vector2.zero; // Initialize position
     }
 
@@ -94,19 +101,22 @@ public class HandTrackingReceiver : MonoBehaviour {
     }
 
     void Update() {
+        bool processedMessageThisFrame = false; // Track if we updated position/click based on new data
+
         // Process messages from the queue on the main thread
         while (messageQueue.TryDequeue(out string jsonData)) {
+            processedMessageThisFrame = true; // Mark that we are processing new data
             try {
                 HandData receivedData = JsonUtility.FromJson<HandData>(jsonData);
 
-                // --- Update Position ---
+                // --- Update Target Screen Position ---
                 // Flip Y coordinate (Web Y=0 is top, Unity Screen Y=0 is bottom)
                 float targetX = receivedData.x * Screen.width;
                 float targetY = (1.0f - receivedData.y) * Screen.height;
-                targetCursorPos = new Vector2(targetX, targetY);
+                targetScreenPos = new Vector2(targetX, targetY);
 
-                // Update static normalized position for other scripts
-                NormalizedHandPosition = new Vector2(receivedData.x, 1.0f - receivedData.y); // Store with flipped Y
+                // Update static normalized position for other scripts (Y is already flipped)
+                NormalizedHandPosition = new Vector2(receivedData.x, 1.0f - receivedData.y);
 
                 // --- Update Click Status ---
                 IsClickDetectedThisFrame = receivedData.click;
@@ -124,33 +134,29 @@ public class HandTrackingReceiver : MonoBehaviour {
         }
 
         // --- Update Virtual Cursor Position (Smoothly) ---
-        if (virtualCursor != null) {
-            // Use ScreenPointToLocalPointInRectangle if cursor is on a Screen Space Canvas
-            // For simplicity, assuming direct mapping works or adjust as needed for your Canvas setup
-            // Simple Lerp for smoothing
-            virtualCursor.anchoredPosition = Vector2.Lerp(virtualCursor.anchoredPosition, targetCursorPos, Time.deltaTime / smoothingFactor);
+        if (virtualCursor != null && mainCamera != null) {
+            // Convert the target screen position to a world position
+            Vector3 screenPoint = new Vector3(targetScreenPos.x, targetScreenPos.y, cursorDistanceFromCamera);
+            Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(screenPoint);
 
-            // Or set directly if no smoothing needed:
-            // virtualCursor.anchoredPosition = targetCursorPos;
+            // Smoothly move the GameObject towards the target world position
+            // Ensure smoothingFactor is positive to avoid issues
+            if (smoothingFactor > 0.001f) {
+                float lerpT = Time.deltaTime / smoothingFactor; // How much to move this frame
+                virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
+            } else {
+                // No smoothing, move directly
+                virtualCursor.transform.position = targetWorldPos;
+            }
         }
 
-        // --- IMPORTANT: Reset Click Flag ---
-        // If click is only meant to be true for a single frame, reset it here.
-        // If you need the state to persist until the next message, don't reset here.
-        // Resetting here makes it behave like Input.GetMouseButtonDown()
-        // if (!messageQueue.IsEmpty) // Only reset if we didn't just process a click
-        // {
-        //      IsClickDetectedThisFrame = false;
-        // }
-        // A potentially safer way is to ensure the JS only sends click=true once per detection event.
-        // Let's assume the JS handles sending click=true only once, so we don't need to reset here,
-        // but rely on the next message having click=false. If JS keeps sending click=true,
-        // you WILL need to reset the flag here after processing.
-
-        // For safety, let's reset it after processing all queued messages for the frame:
-        if (messageQueue.IsEmpty) {
+        // --- Reset Click Flag ---
+        // If no new message was processed this frame, the click state from the *last* message
+        // shouldn't persist unless intended. Resetting here makes it act like GetMouseButtonDown.
+        if (!processedMessageThisFrame) {
             IsClickDetectedThisFrame = false;
         }
-
+        // If you want the click state to persist until a message explicitly sets it to false,
+        // remove the `if (!processedMessageThisFrame)` block.
     }
 }
