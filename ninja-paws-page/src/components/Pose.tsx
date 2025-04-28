@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import PosePkg from "@mediapipe/pose";
+import PosePkg, { GpuBuffer } from "@mediapipe/pose";
 import CameraPkg from "@mediapipe/camera_utils"
 import DrawUtilsPkg from "@mediapipe/drawing_utils";
 import Game from "./Game";
@@ -16,6 +16,7 @@ export default function PoseDetection() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [cursorPos, setCursorPos] = useState<Parameters<typeof Game>[0]["cursorPos"]>({ x: 0.5, y: 0.5 });
+    const [mask, setMask] = useState<Parameters<typeof Game>[0]["mask"]>(null);
 
     useEffect(() => {
         const videoElement = videoRef.current;
@@ -23,12 +24,17 @@ export default function PoseDetection() {
 
         if (!videoElement || !canvasElement) return;
 
-        detectPose(videoElement, canvasElement, (x, y) => setCursorPos({ x, y }));
+        detectPose(
+            videoElement, 
+            canvasElement, 
+            (x, y) => setCursorPos({ x, y }),
+            mask => setMask({base64: mask}),
+        );
     }, [])
 
     return (
         <>
-        <Game cursorPos={cursorPos} />
+        <Game cursorPos={cursorPos} mask={mask} />
         <div className="flex pose">
             <video ref={videoRef} autoPlay playsInline></video>
             <canvas ref={canvasRef} width={1280} height={720}></canvas>
@@ -37,7 +43,12 @@ export default function PoseDetection() {
     );
 }
 
-function detectPose(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasElement, onCursor: (x: number, y: number) => void) {
+function detectPose(
+    videoElement: HTMLVideoElement, 
+    canvasElement: HTMLCanvasElement, 
+    onCursor: (x: number, y: number) => void,
+    onMask: (mask: string) => void = () => {},
+) {
     const canvasCtx = canvasElement.getContext("2d");
     if (!canvasCtx) return;
 
@@ -84,6 +95,7 @@ function detectPose(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasEle
         canvasCtx.restore();
 
         getRightWristPos(result);
+        onMask(canvasElement.toDataURL("image/png"));
     });
 
     const camera = new Camera(videoElement, {
