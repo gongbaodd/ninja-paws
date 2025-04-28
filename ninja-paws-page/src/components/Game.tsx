@@ -29,6 +29,7 @@ export default function Game(props: GameProps) {
         const frameWindow = frameElement.contentWindow;
         if (!frameWindow) return;
 
+        setCursorPosMsg({type: "cursorPos", data: props.cursorPos});
         frameWindow.postMessage({type: "cursorPos", data: props.cursorPos}, location.origin);
 
     }, [props.cursorPos, props.mask]);
@@ -39,6 +40,7 @@ export default function Game(props: GameProps) {
         const frameWindow = frameElement.contentWindow;
         if (!frameWindow) return;
 
+        setMaskMsg({type: "mask", data: props.mask});
         frameWindow.postMessage({type: "mask", data: props.mask}, location.origin);
     }, [props.mask]);
 

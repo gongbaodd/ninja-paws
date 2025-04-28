@@ -5,16 +5,10 @@ using System.Collections.Concurrent;
 using System.Runtime.InteropServices; // For thread-safe queue
 // using UnityEngine.UI; // No longer needed for the cursor itself
 
-// Define a class to hold the received data
 [System.Serializable]
-public class HandData {
-    public float x;
-    public float y;
-    public bool click;
-}
-
-[System.Serializable]
-public struct CursorPosData {
+public struct MessageData {
+    public string type;
+    public string mask;
     public float x;
     public float y;
 }
@@ -60,7 +54,7 @@ public class HandTrackingReceiver : MonoBehaviour {
     private static extern void SetUpDataListener(string gameObjectName);
     void Start() {
         #region Initial Websocket Server
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         // Cache the main camera
         mainCamera = Camera.main;
         if (mainCamera == null) {
@@ -68,7 +62,7 @@ public class HandTrackingReceiver : MonoBehaviour {
         }
 
         // Subscribe to the event from the WebSocketBehavior
-        HandTrackingBehavior.OnDataReceived += HandleWebSocketMessage;
+        HandTrackingBehavior.OnDataReceived += HandleMessage;
 
         // Initialize and start the WebSocket server
         wsServer = new WebSocketServer($"ws://localhost:{port}");
@@ -89,8 +83,8 @@ public class HandTrackingReceiver : MonoBehaviour {
         targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         NormalizedHandPosition = Vector2.zero; // Initialize position
-#endif
-#endregion
+        #endif
+        #endregion
 
         #region Initial iframe env
         #if UNITY_WEBGL && !UNITY_EDITOR
@@ -98,20 +92,9 @@ public class HandTrackingReceiver : MonoBehaviour {
         #endif
         #endregion
     }
-
-    private readonly ConcurrentQueue<string> maskStrQueue = new();
-    public void OnReceiveMask(string maskStr) {
-        maskStrQueue.Enqueue(maskStr);
-    }
-
-    private readonly ConcurrentQueue<string> posStrQueue = new();
-    public void OnReceiveCursorPos(string posStr) {
-        posStrQueue.Enqueue(posStr);
-    }
-
     void OnDestroy() {
         // Unsubscribe
-        HandTrackingBehavior.OnDataReceived -= HandleWebSocketMessage;
+        HandTrackingBehavior.OnDataReceived -= HandleMessage;
 
         // Stop the server when the object is destroyed or game stops
         if (wsServer != null && wsServer.IsListening) {
@@ -123,20 +106,25 @@ public class HandTrackingReceiver : MonoBehaviour {
     }
 
     // This method is called from the WebSocket thread via the event
-    private void HandleWebSocketMessage(string jsonData) {
+    private void HandleMessage(string jsonData) {
         // Add the message to the queue to be processed on the main thread
         messageQueue.Enqueue(jsonData);
+
+        print(jsonData);
     }
 
     void Update()
     {
-        while (posStrQueue.TryDequeue(out string posStr)) {
+        while (messageQueue.TryDequeue(out string posStr)) {
             try {
-                CursorPosData receivedData = JsonUtility.FromJson<CursorPosData>(posStr);
+                MessageData receivedData = JsonUtility.FromJson<MessageData>(posStr);
 
-                float targetX = receivedData.x * Screen.width;
-                float targetY = (1.0f - receivedData.y) * Screen.height;
-                targetScreenPos = new Vector2(targetX, targetY);
+                if (receivedData.type == "cursorPos") {
+                    float targetX = receivedData.x * Screen.width;
+                    float targetY = (1.0f - receivedData.y) * Screen.height;
+                    targetScreenPos = new Vector2(targetX, targetY);
+                }
+
             } catch (System.Exception ex) {
                 Debug.LogError($"Error processing WebSocket message: {ex.Message}\nData: {posStr}");
             }
@@ -144,7 +132,7 @@ public class HandTrackingReceiver : MonoBehaviour {
 
 
         if (virtualCursor != null && mainCamera != null) {
-            Vector3 screenPoint = new Vector3(targetScreenPos.x, targetScreenPos.y, cursorDistanceFromCamera);
+            Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, cursorDistanceFromCamera);
             Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(screenPoint);
             virtualCursor.transform.position = targetWorldPos;
         }

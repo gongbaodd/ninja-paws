@@ -45,6 +45,7 @@ export default function WebSocketComponent(props: { cursorPosMsg: CursorPosMsg |
         if (!ws.current) return;
 
         if (props.cursorPosMsg) {
+
             ws.current.send(JSON.stringify(props.cursorPosMsg));
         }
 

@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 424906751}
   - component: {fileID: 424906750}
   m_Layer: 0
-  m_Name: Websocket
+  m_Name: HandTrackReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,7 +271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   port: 8080
   virtualCursor: {fileID: 719111144}
-  smoothingFactor: 0.2
   cursorDistanceFromCamera: 10
 --- !u!4 &424906751
 Transform:
