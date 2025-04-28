@@ -4,13 +4,15 @@ mergeInto(LibraryManager.library, {
             var data = event.data;
             if (!data) return;
 
+            console.log("DataReceiver: ", data);
+
             if (data.type === "mask" && data.mask) {
-                SendMessage(UTF8ToString(gameObjName), "OnReceiveMask", JSON.stringify(data));
+                SendMessage(UTF8ToString(gameObjName), "OnReceiveMask", data.mask.base64);
             }
 
 
-            if (data.type === "cursorPos" && data.cursorPos) {
-                SendMessage(UTF8ToString(gameObjName), "OnReceiveCursorPos", JSON.stringify(data));
+            if (data.type === "cursorPos" && data.data) {
+                SendMessage(UTF8ToString(gameObjName), "OnReceiveCursorPos", JSON.stringify(data.data));
             }
 
         });

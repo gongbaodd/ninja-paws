@@ -13,6 +13,12 @@ public class HandData {
     public bool click;
 }
 
+[System.Serializable]
+public struct CursorPosData {
+    public float x;
+    public float y;
+}
+
 // The behavior class that handles individual WebSocket connections
 public class HandTrackingBehavior : WebSocketBehavior {
     public static event System.Action<string> OnDataReceived; // Event to notify main thread
@@ -40,7 +46,6 @@ public class HandTrackingBehavior : WebSocketBehavior {
 public class HandTrackingReceiver : MonoBehaviour {
     public int port = 8080; // Must match the JS client
     public GameObject virtualCursor; // Assign a GameObject (e.g., a Sprite or 3D model) in the Inspector
-    public float smoothingFactor = 0.2f; // Adjust for smoother cursor movement (smaller value = smoother, slower; >0)
     public float cursorDistanceFromCamera = 10f; // How far in front of the camera the cursor should appear
 
     public static Vector2 NormalizedHandPosition { get; private set; } // Static property other scripts can read (0,0 bottom-left to 1,1 top-right)
@@ -94,12 +99,14 @@ public class HandTrackingReceiver : MonoBehaviour {
         #endregion
     }
 
+    private readonly ConcurrentQueue<string> maskStrQueue = new();
     public void OnReceiveMask(string maskStr) {
-
+        maskStrQueue.Enqueue(maskStr);
     }
 
+    private readonly ConcurrentQueue<string> posStrQueue = new();
     public void OnReceiveCursorPos(string posStr) {
-
+        posStrQueue.Enqueue(posStr);
     }
 
     void OnDestroy() {
@@ -121,63 +128,25 @@ public class HandTrackingReceiver : MonoBehaviour {
         messageQueue.Enqueue(jsonData);
     }
 
-    void Update() {
-        bool processedMessageThisFrame = false; // Track if we updated position/click based on new data
-
-        // Process messages from the queue on the main thread
-        while (messageQueue.TryDequeue(out string jsonData)) {
-            processedMessageThisFrame = true; // Mark that we are processing new data
+    void Update()
+    {
+        while (posStrQueue.TryDequeue(out string posStr)) {
             try {
-                HandData receivedData = JsonUtility.FromJson<HandData>(jsonData);
+                CursorPosData receivedData = JsonUtility.FromJson<CursorPosData>(posStr);
 
-                // --- Update Target Screen Position ---
-                // Flip Y coordinate (Web Y=0 is top, Unity Screen Y=0 is bottom)
                 float targetX = receivedData.x * Screen.width;
                 float targetY = (1.0f - receivedData.y) * Screen.height;
                 targetScreenPos = new Vector2(targetX, targetY);
-
-                // Update static normalized position for other scripts (Y is already flipped)
-                NormalizedHandPosition = new Vector2(receivedData.x, 1.0f - receivedData.y);
-
-                // --- Update Click Status ---
-                IsClickDetectedThisFrame = receivedData.click;
-                if (IsClickDetectedThisFrame) {
-                    Debug.Log("CLICK Action Received from Web!");
-                    // --- !!! TRIGGER YOUR GAME'S CLICK ACTION HERE !!! ---
-                    // Example: FindObjectOfType<MyGameManager>()?.HandleHandClick();
-                    // Or: Trigger an event, set a flag for player script, etc.
-                }
-
             } catch (System.Exception ex) {
-                Debug.LogError($"Error processing WebSocket message: {ex.Message}\nData: {jsonData}");
-                IsClickDetectedThisFrame = false; // Ensure click is false on error
+                Debug.LogError($"Error processing WebSocket message: {ex.Message}\nData: {posStr}");
             }
         }
 
-        // --- Update Virtual Cursor Position (Smoothly) ---
+
         if (virtualCursor != null && mainCamera != null) {
-            // Convert the target screen position to a world position
             Vector3 screenPoint = new Vector3(targetScreenPos.x, targetScreenPos.y, cursorDistanceFromCamera);
             Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(screenPoint);
-
-            // Smoothly move the GameObject towards the target world position
-            // Ensure smoothingFactor is positive to avoid issues
-            if (smoothingFactor > 0.001f) {
-                float lerpT = Time.deltaTime / smoothingFactor; // How much to move this frame
-                virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
-            } else {
-                // No smoothing, move directly
-                virtualCursor.transform.position = targetWorldPos;
-            }
+            virtualCursor.transform.position = targetWorldPos;
         }
-
-        // --- Reset Click Flag ---
-        // If no new message was processed this frame, the click state from the *last* message
-        // shouldn't persist unless intended. Resetting here makes it act like GetMouseButtonDown.
-        if (!processedMessageThisFrame) {
-            IsClickDetectedThisFrame = false;
-        }
-        // If you want the click state to persist until a message explicitly sets it to false,
-        // remove the `if (!processedMessageThisFrame)` block.
     }
 }
