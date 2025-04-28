@@ -1,18 +1,21 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import PosePkg from "@mediapipe/pose";
 import CameraPkg from "@mediapipe/camera_utils"
 import DrawUtilsPkg from "@mediapipe/drawing_utils";
+import Game from "./Game";
 
 const { Pose, POSE_CONNECTIONS } = PosePkg;
 const { Camera } = CameraPkg;
 const { drawConnectors, drawLandmarks } = DrawUtilsPkg;
+const RIGHT_WRIST_INDEX = 16;
 
 export default function PoseDetection() {
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [cursorPos, setCursorPos] = useState<Parameters<typeof Game>[0]["cursorPos"]>({ x: 0.5, y: 0.5 });
 
     useEffect(() => {
         const videoElement = videoRef.current;
@@ -20,18 +23,21 @@ export default function PoseDetection() {
 
         if (!videoElement || !canvasElement) return;
 
-        detectPose(videoElement, canvasElement);
+        detectPose(videoElement, canvasElement, (x, y) => setCursorPos({ x, y }));
     }, [])
 
     return (
+        <>
+        <Game cursorPos={cursorPos} />
         <div className="flex pose">
             <video ref={videoRef} autoPlay playsInline></video>
             <canvas ref={canvasRef} width={1280} height={720}></canvas>
         </div>
+        </>
     );
 }
 
-function detectPose(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasElement) {
+function detectPose(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasElement, onCursor: (x: number, y: number) => void) {
     const canvasCtx = canvasElement.getContext("2d");
     if (!canvasCtx) return;
 
@@ -77,6 +83,7 @@ function detectPose(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasEle
         });
         canvasCtx.restore();
 
+        getRightWristPos(result);
     });
 
     const camera = new Camera(videoElement, {
@@ -91,4 +98,14 @@ function detectPose(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasEle
     return () => {
         camera.stop();
     };
+
+    function getRightWristPos(results: PosePkg.Results) {
+        const rightWrist = results.poseLandmarks[RIGHT_WRIST_INDEX];
+
+        if (rightWrist) {
+            const x = rightWrist.x;
+            const y = rightWrist.y;
+            onCursor(x, y);
+        }
+    }
 }

@@ -1,4 +1,3 @@
-import Game from "../components/Game";
 import Pose from "../components/Pose";
 
 export default async function HomePage() {
@@ -7,8 +6,7 @@ export default async function HomePage() {
   return (
     <div>
       <title>{data.title}</title>
-      <Game />
-      <Pose />
+      <Pose/>
     </div>
   );
 }

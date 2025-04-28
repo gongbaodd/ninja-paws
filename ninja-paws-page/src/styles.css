@@ -8,6 +8,7 @@ layer(base);
     video {
         width: 1280px;
         height: 720px;
+        /* display: none; */
     }
 
     canvas {
@@ -16,5 +17,7 @@ layer(base);
         left: 0;
         width: 1280px;
         height: 720px;
+        /* display: none; */
+
     }
 }
