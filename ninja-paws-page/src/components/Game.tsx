@@ -16,7 +16,7 @@ export default function Game(props: GameProps) {
         const frameWindow = frameElement.contentWindow;
         if (!frameWindow) return;
 
-        frameWindow.postMessage(JSON.stringify({type: "cursorPos", data: props.cursorPos}), location.origin);
+        frameWindow.postMessage({type: "cursorPos", data: props.cursorPos}, location.origin);
 
     }, [props.cursorPos, props.mask]);
 
@@ -26,7 +26,7 @@ export default function Game(props: GameProps) {
         const frameWindow = frameElement.contentWindow;
         if (!frameWindow) return;
 
-        frameWindow.postMessage(JSON.stringify({type: "mask", data: props.mask}), location.origin);
+        frameWindow.postMessage({type: "mask", data: props.mask}, location.origin);
     }, [props.mask]);
 
     return (

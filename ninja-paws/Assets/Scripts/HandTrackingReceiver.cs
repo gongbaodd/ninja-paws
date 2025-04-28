@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using System.Collections.Concurrent; // For thread-safe queue
+using System.Collections.Concurrent;
+using System.Runtime.InteropServices; // For thread-safe queue
 // using UnityEngine.UI; // No longer needed for the cursor itself
 
 // Define a class to hold the received data
@@ -46,11 +47,15 @@ public class HandTrackingReceiver : MonoBehaviour {
     public static bool IsClickDetectedThisFrame { get; private set; } // Static property for click
 
     private WebSocketServer wsServer;
-    private ConcurrentQueue<string> messageQueue = new ConcurrentQueue<string>(); // Thread-safe queue
+    private readonly ConcurrentQueue<string> messageQueue = new (); // Thread-safe queue
     private Vector2 targetScreenPos; // Target position in Screen Coordinates
     private Camera mainCamera; // Cache the main camera
 
+    [DllImport("__Internal")]
+    private static extern void SetUpDataListener(string gameObjectName);
     void Start() {
+        #region Initial Websocket Server
+#if UNITY_EDITOR
         // Cache the main camera
         mainCamera = Camera.main;
         if (mainCamera == null) {
@@ -79,6 +84,22 @@ public class HandTrackingReceiver : MonoBehaviour {
         targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         NormalizedHandPosition = Vector2.zero; // Initialize position
+#endif
+#endregion
+
+        #region Initial iframe env
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            SetUpDataListener(gameObject.name);
+        #endif
+        #endregion
+    }
+
+    public void OnReceiveMask(string maskStr) {
+
+    }
+
+    public void OnReceiveCursorPos(string posStr) {
+
     }
 
     void OnDestroy() {
