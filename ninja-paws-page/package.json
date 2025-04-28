@@ -4,10 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "waku dev",
+    "dev": "waku dev -p 8001",
     "build": "waku build",
     "start": "waku start",
-    "cp:model": "cp -r node_modules/@mediapipe/pose/* public/@mediapipe/pose"
+    "cp:model": "cp -r node_modules/@mediapipe/pose/* public/@mediapipe/pose",
+    "cp:game": "cp -r ../ninja-paws/build/WebGL/WebGL/* public/game"
   },
   "dependencies": {
     "@mediapipe/camera_utils": "^0.3.1675466862",

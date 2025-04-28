@@ -6,3 +6,4 @@ dist
 .DS_Store
 *.pem
 public/@mediapipe/pose
+public/game
