@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import PosePkg, { GpuBuffer } from "@mediapipe/pose";
+import PosePkg from "@mediapipe/pose";
 import CameraPkg from "@mediapipe/camera_utils"
 import DrawUtilsPkg from "@mediapipe/drawing_utils";
 import Game from "./Game";
+import WebSocketComponent from "./WebSocket";
 
 const { Pose, POSE_CONNECTIONS } = PosePkg;
 const { Camera } = CameraPkg;
