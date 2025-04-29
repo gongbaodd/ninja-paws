@@ -42,13 +42,10 @@ namespace Assets.Scenes.FruitNinja.Scripts
             {
                 var cursorController = gameManager.GetComponent<CursorController>();
 
-                if (cursorController.IsDrawing)
-                {
-                    Vector2 fruitPos = transform.position;
-                    OnFruitDestroyed?.Invoke(fruitPos);
+                Vector2 fruitPos = transform.position;
+                OnFruitDestroyed?.Invoke(fruitPos);
 
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
             }
         }
 
