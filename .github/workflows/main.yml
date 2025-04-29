@@ -6,6 +6,7 @@ on:
       - main
     paths: 
       - 'ninja-paws/**'
+      - 'ninja-paws-page/**'
       - '.github/workflows/main.yml'
 
 jobs:
@@ -40,11 +41,24 @@ jobs:
           projectPath: ninja-paws
           allowDirtyBuild: true
 
+      # Build Page
+      - name: Build page
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: |
+          cd ninja-paws-page
+          npm install
+          npm run cp:model
+          npm run cp:game
+          npm run build
+
       # Upload to itch.io
       - name: Upload to itch.io project
         uses: robpc/itchio-upload-action@v1
         with:
-          path: build/WebGL/WebGL
+          path: ninja-paws-page/dist/public
           project: gongbaodd/ninja-paws
           channel: html5
           api-key: ${{ secrets.ITCHIO_API_KEY }}
@@ -54,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Build
-          path: build
+          path: ninja-paws-page/dist/public
 
       # Send Notification
       - name: Discord notification
