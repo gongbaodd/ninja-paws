@@ -8,9 +8,15 @@ using System.Runtime.InteropServices; // For thread-safe queue
 [System.Serializable]
 public struct MessageData {
     public string type;
-    public string mask;
+    public Data data;
+}
+
+[System.Serializable]
+
+public struct Data {
     public float x;
     public float y;
+    public string base64;
 }
 
 // The behavior class that handles individual WebSocket connections
@@ -40,8 +46,9 @@ public class HandTrackingBehavior : WebSocketBehavior {
 public class HandTrackingReceiver : MonoBehaviour {
     public int port = 8080; // Must match the JS client
     public GameObject virtualCursor; // Assign a GameObject (e.g., a Sprite or 3D model) in the Inspector
+    public Renderer mask;
     public float cursorDistanceFromCamera = 10f; // How far in front of the camera the cursor should appear
-
+    public float smoothingFactor = 0.01f;
     public static Vector2 NormalizedHandPosition { get; private set; } // Static property other scripts can read (0,0 bottom-left to 1,1 top-right)
     public static bool IsClickDetectedThisFrame { get; private set; } // Static property for click
 
@@ -53,15 +60,13 @@ public class HandTrackingReceiver : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern void SetUpDataListener(string gameObjectName);
     void Start() {
-        #region Initial Websocket Server
-        #if UNITY_EDITOR
-        // Cache the main camera
         mainCamera = Camera.main;
         if (mainCamera == null) {
             Debug.LogError("Could not find Main Camera in the scene. Please ensure a camera is tagged 'MainCamera'.", this);
         }
 
-        // Subscribe to the event from the WebSocketBehavior
+        #region Initial Websocket Server
+        #if UNITY_EDITOR && !UNITY_WEBGL
         HandTrackingBehavior.OnDataReceived += HandleMessage;
 
         // Initialize and start the WebSocket server
@@ -109,20 +114,40 @@ public class HandTrackingReceiver : MonoBehaviour {
     private void HandleMessage(string jsonData) {
         // Add the message to the queue to be processed on the main thread
         messageQueue.Enqueue(jsonData);
-
-        print(jsonData);
     }
 
     void Update()
     {
+        Texture2D previousTexture = null;
+
         while (messageQueue.TryDequeue(out string posStr)) {
             try {
                 MessageData receivedData = JsonUtility.FromJson<MessageData>(posStr);
 
                 if (receivedData.type == "cursorPos") {
-                    float targetX = receivedData.x * Screen.width;
-                    float targetY = (1.0f - receivedData.y) * Screen.height;
+                    float targetX = receivedData.data.x * Screen.width;
+                    float targetY = (1.0f - receivedData.data.y) * Screen.height;
                     targetScreenPos = new Vector2(targetX, targetY);
+                }
+
+                if (receivedData.type == "mask") {
+                    string base64 = receivedData.data.base64[(receivedData.data.base64.IndexOf(",") + 1)..];
+
+                    byte[] imagebytes = System.Convert.FromBase64String(base64);
+
+                    Texture2D texture = new(1, 1, TextureFormat.RGBA32, false);
+
+                    if (texture.LoadImage(imagebytes)) {
+                        texture.Apply();
+                        
+                        if (previousTexture != null) {
+                            Destroy(previousTexture);
+                        }   
+
+                        mask.material.shader = Shader.Find("Unlit/Transparent");
+                        previousTexture = texture;
+                        mask.material.mainTexture = texture;
+                    }
                 }
 
             } catch (System.Exception ex) {
@@ -134,7 +159,8 @@ public class HandTrackingReceiver : MonoBehaviour {
         if (virtualCursor != null && mainCamera != null) {
             Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, cursorDistanceFromCamera);
             Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(screenPoint);
-            virtualCursor.transform.position = targetWorldPos;
+            float lerpT = Time.deltaTime / smoothingFactor;
+            virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
         }
     }
 }

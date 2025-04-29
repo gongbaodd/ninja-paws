@@ -20,34 +20,35 @@ export interface MaskMsg {
 
 export default function Game(props: GameProps) {
     const frameRef = useRef<HTMLIFrameElement>(null);
-    const [cursorPosMsg, setCursorPosMsg] = useState<CursorPosMsg | null>(null);
-    const [maskMsg, setMaskMsg] = useState<MaskMsg | null>(null);
+
+    const cursorPosMsg: CursorPosMsg = {
+        type: "cursorPos",
+        data: props.cursorPos,
+    };
+
+    const maskMsg: MaskMsg = {
+        type: "mask",
+        data: props.mask,
+    };
 
     useEffect(() => {
-        const frameElement = frameRef.current;
-        if (!frameElement) return;
-        const frameWindow = frameElement.contentWindow;
-        if (!frameWindow) return;
-
-        setCursorPosMsg({type: "cursorPos", data: props.cursorPos});
-        frameWindow.postMessage({type: "cursorPos", data: props.cursorPos}, location.origin);
-
-    }, [props.cursorPos, props.mask]);
+        const frameWindow = frameRef.current?.contentWindow;
+        if (frameWindow) {
+            frameWindow.postMessage(cursorPosMsg, location.origin);
+        }
+    }, [cursorPosMsg]);
 
     useEffect(() => {
-        const frameElement = frameRef.current;
-        if (!frameElement) return;
-        const frameWindow = frameElement.contentWindow;
-        if (!frameWindow) return;
-
-        setMaskMsg({type: "mask", data: props.mask});
-        frameWindow.postMessage({type: "mask", data: props.mask}, location.origin);
-    }, [props.mask]);
+        const frameWindow = frameRef.current?.contentWindow;
+        if (frameWindow) {
+            frameWindow.postMessage(maskMsg, location.origin);
+        }
+    }, [maskMsg]);
 
     return (
         <div>
             <iframe ref={frameRef} title="game" src="/game/index.html" width="1300" height="780" />
-            <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} />
+            {/* <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} /> */}
         </div>
     );
 }

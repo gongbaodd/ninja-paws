@@ -83,16 +83,16 @@ function detectPose(
         canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
 
         // Only overwrite missing pixels.
-        canvasCtx.globalCompositeOperation = "destination-atop";
-        canvasCtx.globalCompositeOperation = "source-over";
-        drawConnectors(canvasCtx, result.poseLandmarks, POSE_CONNECTIONS, {
-            color: "#00FF00",
-            lineWidth: 4,
-        });
-        drawLandmarks(canvasCtx, result.poseLandmarks, {
-            color: "#FF0000",
-            lineWidth: 2,
-        });
+        // canvasCtx.globalCompositeOperation = "destination-atop";
+        // canvasCtx.globalCompositeOperation = "source-over";
+        // drawConnectors(canvasCtx, result.poseLandmarks, POSE_CONNECTIONS, {
+        //     color: "#00FF00",
+        //     lineWidth: 4,
+        // });
+        // drawLandmarks(canvasCtx, result.poseLandmarks, {
+        //     color: "#FF0000",
+        //     lineWidth: 2,
+        // });
         canvasCtx.restore();
 
         getRightWristPos(result);

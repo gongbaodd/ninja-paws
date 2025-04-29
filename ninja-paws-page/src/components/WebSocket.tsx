@@ -8,7 +8,6 @@ export default function WebSocketComponent(props: { cursorPosMsg: CursorPosMsg |
 
     useEffect(() => {
         if (ws.current) return;
-
         connectWebSocket();
 
         return () => ws.current?.close(); // Cleanup on unmount
@@ -43,17 +42,21 @@ export default function WebSocketComponent(props: { cursorPosMsg: CursorPosMsg |
 
     useEffect(() => {
         if (!ws.current) return;
+        if (ws.current.readyState !== WebSocket.OPEN) return;
 
         if (props.cursorPosMsg) {
-
             ws.current.send(JSON.stringify(props.cursorPosMsg));
         }
+    }, [props.cursorPosMsg]);
+
+    useEffect(() => {
+        if (!ws.current) return;
+        if (ws.current.readyState !== WebSocket.OPEN) return;
 
         if (props.maskMsg) {
             ws.current.send(JSON.stringify(props.maskMsg));
         }
-    }, [props.cursorPosMsg, props.maskMsg]);
-
+    }, [props.maskMsg])
 
     return <></>
 }

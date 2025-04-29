@@ -1,27 +1,15 @@
 mergeInto(LibraryManager.library, {
-    SetUpDataListener: function(gameObjName) {
+    SetUpDataListener: function(gameObjNamePtr) {
+        var gameObjName = UTF8ToString(gameObjNamePtr);
+        console.log("Listening for messages for GameObject:", gameObjName);
+
         window.addEventListener("message", function(event) {
             var data = event.data;
             if (!data) return;
 
-            console.log("DataReceiver: ", data);
-
-            if (data.type === "mask" && data.mask) {
-                SendMessage(UTF8ToString(gameObjName), "HandleMessage", JSON.stringify({
-                    type: "mask",
-                    mask: data.mask.base64,
-                }));
+            if ((data.type === "mask" && data.data) || (data.type === "cursorPos" && data.data)) {
+                SendMessage(gameObjName, "HandleMessage", JSON.stringify(data));
             }
-
-
-            if (data.type === "cursorPos" && data.data) {
-                SendMessage(UTF8ToString(gameObjName), "HandleMessage", JSON.stringify({
-                    type: "cursorPos",
-                    x: data.data.x,
-                    y: data.data.y,
-                }));
-            }
-
         });
     }
 });
