@@ -8,7 +8,7 @@
     "build": "waku build",
     "start": "waku start",
     "cp:model": "mkdir -p public/@mediapipe/pose && cp -r node_modules/@mediapipe/pose/* public/@mediapipe/pose",
-    "cp:game": "cp -r ../build/WebGL/WebGL/* public/game"
+    "cp:game": "mkdir -p public/game && cp -r ../build/WebGL/WebGL/* public/game"
   },
   "dependencies": {
     "@mediapipe/camera_utils": "^0.3.1675466862",
