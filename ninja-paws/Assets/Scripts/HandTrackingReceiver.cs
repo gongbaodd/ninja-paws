@@ -116,10 +116,10 @@ public class HandTrackingReceiver : MonoBehaviour {
         messageQueue.Enqueue(jsonData);
     }
 
+    private Texture2D previousTexture = null;
+
     void Update()
     {
-        Texture2D previousTexture = null;
-
         while (messageQueue.TryDequeue(out string posStr)) {
             try {
                 MessageData receivedData = JsonUtility.FromJson<MessageData>(posStr);
