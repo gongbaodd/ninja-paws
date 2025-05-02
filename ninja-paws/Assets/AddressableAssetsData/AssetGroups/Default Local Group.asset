@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 0e7f852d20e34b840940eed472c846d6
   m_SerializeEntries:
+  - m_GUID: 6f7793c566a643346a8db313c18a7e13
+    m_Address: Assets/Scenes/Levels.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e07d84aa68f1b014782fd29ed1b93218
     m_Address: Assets/Scenes/FruitNinja/FruitNinja.unity
     m_ReadOnly: 0
