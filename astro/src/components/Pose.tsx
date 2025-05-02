@@ -54,7 +54,7 @@ function detectPose(
     if (!canvasCtx) return;
 
     const pose = new Pose({
-        locateFile: (file) => `/@mediapipe/pose/${file}`,
+        locateFile: (file) => `./@mediapipe/pose/${file}`,
     });
 
     pose.setOptions({

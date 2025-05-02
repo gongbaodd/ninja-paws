@@ -48,7 +48,7 @@ jobs:
           node-version: 20
 
       - run: |
-          cd ninja-paws-page
+          cd astro
           npm install
           npm run cp:model
           npm run cp:game
@@ -58,7 +58,7 @@ jobs:
       - name: Upload to itch.io project
         uses: robpc/itchio-upload-action@v1
         with:
-          path: ninja-paws-page/dist/public
+          path: astro/dist
           project: gongbaodd/ninja-paws
           channel: html5
           api-key: ${{ secrets.ITCHIO_API_KEY }}
@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Build
-          path: ninja-paws-page/dist/public
+          path: astro/dist
 
       # Send Notification
       - name: Discord notification
