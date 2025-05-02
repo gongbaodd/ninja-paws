@@ -1,5 +1,5 @@
 import { use, useEffect, useRef } from "react";
-import { CursorPosMsg, MaskMsg } from "./Game";
+import type { CursorPosMsg, MaskMsg } from "./Game";
 
 const UNITY_WEBSOCKET_URL = "ws://localhost:8080";
 

@@ -1,14 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&display=swap')
-layer(base);
-@import 'tailwindcss';
-
 .pose {
     position: relative;
+    display: none;
 
     video {
         width: 1280px;
         height: 720px;
-        display: none;
     }
 
     canvas {
@@ -17,7 +13,9 @@ layer(base);
         left: 0;
         width: 1280px;
         height: 720px;
-        display: none;
-
     }
+}
+
+iframe {
+    border: 0;
 }
