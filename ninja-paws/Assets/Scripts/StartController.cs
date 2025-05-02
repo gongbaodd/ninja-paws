@@ -7,6 +7,7 @@ public class StartController : MonoBehaviour
 {
 
     UIDocument ui;
+
     void Awake()
     {
         ui = GetComponent<UIDocument>();

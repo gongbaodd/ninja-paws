@@ -2,7 +2,15 @@
     <Style src="project://database/Assets/UIs/Start.uss?fileID=7433441132597879392&amp;guid=a6af540bfa5baf74ca2adad19eb84f21&amp;type=3#Start" />
     <engine:VisualElement name="panel" class="panel">
         <engine:VisualElement name="sidebar" class="sidebar">
+            <engine:VisualElement style="flex-grow: 1;" />
             <engine:Button text="Play" name="playButton" />
+            <engine:VisualElement style="flex-grow: 1;" />
+            <engine:Toggle label="Mothion Detect" name="MotionToggle" data-source="project://database/Assets/Configs/GameSettings.asset?fileID=11400000&amp;guid=70222ec3682b3334f89e3c7adeb7b62f&amp;type=2#GameSettings" data-source-path="useMotion">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="useMotion" data-source="project://database/Assets/Configs/GameSettings.asset?fileID=11400000&amp;guid=70222ec3682b3334f89e3c7adeb7b62f&amp;type=2#GameSettings" binding-mode="TwoWay" />
+                </Bindings>
+            </engine:Toggle>
+            <engine:VisualElement style="flex-grow: 1;" />
         </engine:VisualElement>
         <engine:VisualElement style="flex-grow: 1;" />
     </engine:VisualElement>
