@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041d811c7c06470448c82029f033d9de, type: 3}
+  m_Name: Apple and Carrot Salad
+  m_EditorClassIdentifier: 
+  itemName: Apple and Carrot Salad
+  sprite: {fileID: 0}
+  ingredients:
+  - {fileID: 11400000, guid: 24cbf2a1dae7d984ea263d19cc8cff33, type: 2}
+  - {fileID: 11400000, guid: 250e7b0922d21ef489bc6c9f16db4ccc, type: 2}
+  - {fileID: 11400000, guid: bf491cfcd92b54240b64c95a1006c278, type: 2}
+  - {fileID: 11400000, guid: 29de634ba5c9c3f4c9af5550cd4f34d5, type: 2}
+  country: 0

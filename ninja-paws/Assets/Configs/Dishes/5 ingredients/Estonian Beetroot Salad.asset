@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041d811c7c06470448c82029f033d9de, type: 3}
+  m_Name: Estonian Beetroot Salad
+  m_EditorClassIdentifier: 
+  itemName: Estonian Beetroot Salad
+  sprite: {fileID: 0}
+  ingredients:
+  - {fileID: 11400000, guid: 60e92446af2e35f4493bd5b9c3999832, type: 2}
+  - {fileID: 11400000, guid: 23125bccccba96446bd718d2cd7d9e1f, type: 2}
+  - {fileID: 11400000, guid: 203d589e7f15cee468f4f122e797357d, type: 2}
+  - {fileID: 11400000, guid: 07b4059f3d8238f42baeca56bea1fe53, type: 2}
+  - {fileID: 11400000, guid: d5cb233b1e1ef8a40a545a5639504a7b, type: 2}
+  country: 0

@@ -5,3 +5,4 @@ public class GameSettings : ScriptableObject
 {
     public bool useMotion = false;
 }
+

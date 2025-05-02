@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041d811c7c06470448c82029f033d9de, type: 3}
+  m_Name: Estonian Apple and Cinnamon Porridge
+  m_EditorClassIdentifier: 
+  itemName: Estonian Apple and Cinnamon Porridge
+  sprite: {fileID: 0}
+  ingredients:
+  - {fileID: 11400000, guid: 936fc2f8786e5b44fb38a44ba3768982, type: 2}
+  - {fileID: 11400000, guid: edadd81cf8778f947ad0e4c5cab1be83, type: 2}
+  - {fileID: 11400000, guid: 24cbf2a1dae7d984ea263d19cc8cff33, type: 2}
+  - {fileID: 11400000, guid: 71f31185e88d7784eae85fb20cd7c07e, type: 2}
+  - {fileID: 11400000, guid: bf491cfcd92b54240b64c95a1006c278, type: 2}
+  country: 0

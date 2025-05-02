@@ -14,7 +14,7 @@ public class LevelSceneController : MonoBehaviour
         var level1Button = ui.rootVisualElement.Q<Button>("level1Button");
 
         level1Button.RegisterCallback<ClickEvent>(evt => {
-            Addressables.LoadSceneAsync("FruitNinja", LoadSceneMode.Single);
+            Addressables.LoadSceneAsync("FruitNinja/FruitNinja", LoadSceneMode.Single);
         });
     }
 }
