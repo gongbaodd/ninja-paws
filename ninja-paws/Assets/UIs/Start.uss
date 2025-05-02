@@ -8,5 +8,5 @@
 .panel {
     flex-grow: 1;
     flex-direction: row;
-    background-image: resource('Start');
+    background-image: resource('start menu background');
 }
