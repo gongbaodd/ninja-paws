@@ -11,9 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels.unity
     guid: 6f7793c566a643346a8db313c18a7e13
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FruitNinja/FruitNinja.unity
     guid: e07d84aa68f1b014782fd29ed1b93218
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: e8cd0ac613d64d448aa483f92b92ae69, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

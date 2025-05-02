@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -13,7 +14,7 @@ public class LevelSceneController : MonoBehaviour
         var level1Button = ui.rootVisualElement.Q<Button>("level1Button");
 
         level1Button.RegisterCallback<ClickEvent>(evt => {
-            SceneManager.LoadScene("FruitNinja", LoadSceneMode.Single);
+            Addressables.LoadSceneAsync("FruitNinja", LoadSceneMode.Single);
         });
     }
 }
