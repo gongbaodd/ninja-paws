@@ -14,3 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useMotion: 0
   buttonVFX: {fileID: 1059396251222821467, guid: 6f40d476b685ff04cab7f26744984544, type: 3}
+  dishes:
+  - {fileID: 11400000, guid: ba6be66bfcf67bc45b7750343b0f4857, type: 2}
+  - {fileID: 11400000, guid: 9aebeb1aab978cc4ea91a39890a1f956, type: 2}
+  - {fileID: 11400000, guid: 3bc5ccc5e35e74e41b4a467e217691c9, type: 2}
+  - {fileID: 11400000, guid: 4de19992c1ed25e4baa7d7875171f345, type: 2}
+  - {fileID: 11400000, guid: 28ed1ff8f453fd34f844d4e2f14b2967, type: 2}
+  - {fileID: 11400000, guid: 546b9721090f3ea4d9d2863dd20b320a, type: 2}
+  - {fileID: 11400000, guid: 74fe53eb8315d18418338b8b660f171e, type: 2}
+  - {fileID: 11400000, guid: a92b1ab6b1ffbac419d61d14e94420ef, type: 2}
+  - {fileID: 11400000, guid: f3f13990bd99d37408ce20388b9e52a0, type: 2}
+  - {fileID: 11400000, guid: 15a53251c6b53784e9b61a21b773a51f, type: 2}
+  - {fileID: 11400000, guid: e294c2859bc29a747b3bfb565ba15ece, type: 2}
+  - {fileID: 11400000, guid: 9ea08afabc180344c8991f17b393853c, type: 2}
+  - {fileID: 11400000, guid: 1913489f94f90ec46b654865492f79db, type: 2}
+  - {fileID: 11400000, guid: 6869c9d078fe7b04b8727e919236efe8, type: 2}
+  - {fileID: 11400000, guid: 9641189c70f1e9b4a8d58f0bde92c6d7, type: 2}
+  - {fileID: 11400000, guid: 5ec90d104c8911c4fa99f0ba5e3d7a6d, type: 2}
+  - {fileID: 11400000, guid: 9f9bdd51646983743a5429bca0976d98, type: 2}
+  - {fileID: 11400000, guid: 55dfc08bb31fad84f887a8bb9ae10d67, type: 2}
+  - {fileID: 11400000, guid: 72540f5bcd0f9ac43b268e7ed485fe4e, type: 2}
+  - {fileID: 11400000, guid: 72f256e897120de49ba0726c88eca43c, type: 2}
+  - {fileID: 11400000, guid: 130cc8ae8b8d721498056dabc3ef0d93, type: 2}
+  - {fileID: 11400000, guid: a1ef7c4414579434cbe90fd201e304ad, type: 2}
+  - {fileID: 11400000, guid: 2e97016e5626ea84e833bf7ae71632a9, type: 2}
+  - {fileID: 11400000, guid: d136ff9fd166d304aa611f82069d90bf, type: 2}
+  - {fileID: 11400000, guid: 9cbc55b75170ffd4cae291f4aeeedc14, type: 2}
+  - {fileID: 11400000, guid: 7909a60d2f3d15745af7985a50eeaf5f, type: 2}
+  - {fileID: 11400000, guid: 252356888ac88bf4fa332f3a8ae61a67, type: 2}
+  - {fileID: 11400000, guid: 832d9a6bc6b4ba34696f9026016d674f, type: 2}
+  - {fileID: 11400000, guid: 1a1dc5f3e060c784893ce353348ef754, type: 2}
+  - {fileID: 11400000, guid: 9396e169e72107d488fcf95d562b009a, type: 2}

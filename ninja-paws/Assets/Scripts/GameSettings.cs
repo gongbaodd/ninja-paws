@@ -7,5 +7,7 @@ public class GameSettings : ScriptableObject
 
     public GameObject buttonVFX;
 
+    public DishConfig[] dishes;
+
 }
 
