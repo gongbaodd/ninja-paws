@@ -52,18 +52,17 @@ public class HandTrackingBehavior : WebSocketBehavior
 // The main MonoBehaviour that sets up the server and processes data
 public class HandTrackingReceiver : MonoBehaviour
 {
-    public int port = 8080; // Must match the JS client
-    GameObject virtualCursor; // Assign a GameObject (e.g., a Sprite or 3D model) in the Inspector
+    public int port = 8080; 
+    GameObject virtualCursor; 
     public Renderer mask;
-    public float cursorDistanceFromCamera = 10f; // How far in front of the camera the cursor should appear
     public float smoothingFactor = 0.01f;
-    public static Vector2 NormalizedHandPosition { get; private set; } // Static property other scripts can read (0,0 bottom-left to 1,1 top-right)
-    public static bool IsClickDetectedThisFrame { get; private set; } // Static property for click
 
-    private WebSocketServer wsServer;
-    private readonly ConcurrentQueue<string> messageQueue = new(); // Thread-safe queue
-    private Vector2 targetScreenPos; // Target position in Screen Coordinates
-    private Camera mainCamera; // Cache the main camera
+    WebSocketServer wsServer;
+    readonly ConcurrentQueue<string> messageQueue = new(); 
+    Vector2 targetScreenPos; 
+    Camera mainCamera; 
+
+    float desiredZ = 0;
 
     [DllImport("__Internal")]
     private static extern void SetUpDataListener(string gameObjectName);
@@ -131,8 +130,6 @@ public class HandTrackingReceiver : MonoBehaviour
         InitializeIframeListener();
 
         targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
-
-        NormalizedHandPosition = Vector2.zero; 
     }
     void OnDestroy()
     {
@@ -197,8 +194,9 @@ public class HandTrackingReceiver : MonoBehaviour
 
         if (virtualCursor != null && mainCamera != null)
         {
-            Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, cursorDistanceFromCamera);
+            Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, mainCamera.nearClipPlane);
             Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(screenPoint);
+            targetWorldPos.z = desiredZ;
             float lerpT = Time.deltaTime / smoothingFactor;
             virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
         }
