@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   useMotion: 0
-  startMenuImage: {fileID: 21300000, guid: 8be3c9668a9162a45aa7afa113c212c7, type: 3}
+  buttonVFX: {fileID: 1059396251222821467, guid: 6f40d476b685ff04cab7f26744984544, type: 3}
