@@ -10,9 +10,9 @@ public class ButtonController : MonoBehaviour
     {
         var vfx = Instantiate(config.buttonVFX, transform.position, Quaternion.identity);
         vfx.transform.localPosition = new Vector3(transform.position.x, transform.position.y, relativeZ);
-
         vfx.GetComponent<ParticleSystem>().Play();
-        Destroy(gameObject, .8f);
+
+        gameObject.SetActive(false);
     }
     void OnTriggerEnter(Collider other)
     {
