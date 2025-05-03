@@ -4,16 +4,26 @@ public class GameManagerController : MonoBehaviour
 {
     public static GameManagerController Instance { get { return instance; } }
     static GameManagerController instance;
-    [SerializeField] GameSettings config;
+    public GameSettings config;
+
+    void InitPlayerSettings() {
+        bool playerUseMotion = PlayerPrefs.GetInt("UseMotion") == 1;
+        config.useMotion = playerUseMotion;
+    }
+
     void Awake()
     {
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
             instance = this;
+            DontDestroyOnLoad(instance);
         }
+
+        InitPlayerSettings();
     }
+
 }

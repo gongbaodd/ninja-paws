@@ -62,7 +62,9 @@ public class HandTrackingReceiver : MonoBehaviour
     Vector2 targetScreenPos; 
     Camera mainCamera; 
 
-    float desiredZ = 0;
+    readonly float desiredZ = 0;
+
+    bool useMotion = false;
 
     [DllImport("__Internal")]
     private static extern void SetUpDataListener(string gameObjectName);
@@ -112,6 +114,16 @@ public class HandTrackingReceiver : MonoBehaviour
 
     private Texture2D previousTexture = null;
 
+    void InitService() {
+        useMotion = true;
+
+        InitializeWebsocketServer();
+
+        InitializeIframeListener();
+
+        targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+    }
+
     void Awake()
     {
         virtualCursor = gameObject;
@@ -125,11 +137,9 @@ public class HandTrackingReceiver : MonoBehaviour
             Debug.LogError("Could not find Main Camera in the scene. Please ensure a camera is tagged 'MainCamera'.", this);
         }
 
-        InitializeWebsocketServer();
-
-        InitializeIframeListener();
-
-        targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        // if (GameManagerController.Instance.config.useMotion) {
+        //     InitService();
+        // }
     }
     void OnDestroy()
     {
@@ -148,6 +158,8 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void Update()
     {
+        if (!useMotion) return;
+
         while (messageQueue.TryDequeue(out string posStr))
         {
             try
