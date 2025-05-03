@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   useMotion: 0
+  startMenuImage: {fileID: 21300000, guid: 8be3c9668a9162a45aa7afa113c212c7, type: 3}
