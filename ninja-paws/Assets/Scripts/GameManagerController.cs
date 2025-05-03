@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SceneManagerController))]
@@ -8,11 +9,19 @@ public class GameManagerController : MonoBehaviour
     static GameManagerController instance;
     public GameSettings config;
 
+    public List<IngredientConfig> ingredients = new();
     public int dishIndex = 0;
 
     void InitPlayerSettings() {
         bool playerUseMotion = PlayerPrefs.GetInt("UseMotion") == 1;
         config.useMotion = playerUseMotion;
+    }
+
+    void CollectIngredients() {
+        var dishes = config.dishes;
+        foreach (var dish in dishes) {
+            ingredients.AddRange(dish.ingredients);
+        }
     }
 
     void Awake()
@@ -28,6 +37,8 @@ public class GameManagerController : MonoBehaviour
         }
 
         InitPlayerSettings();
+
+        CollectIngredients();
     }
 
 }
