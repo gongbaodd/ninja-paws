@@ -11,10 +11,15 @@ public class ButtonController : MonoBehaviour
     [SerializeField] UnityEvent onSliced;
     AudioSource sfx;
 
+    bool isSlicable = true;
+
+    public void SetSlicable(bool isSlicable) {
+        this.isSlicable = isSlicable;
+    }
+
     public void StartLoading() {
         manager.GetComponent<SceneManagerController>().BeforeLoadScene();
     }
-
     public void GotoLevelsScene() {
         manager.GetComponent<SceneManagerController>().GotoLevelMenuScene();
     }
@@ -23,21 +28,29 @@ public class ButtonController : MonoBehaviour
         manager.GetComponent<SceneManagerController>().GotoStartScene();
     }
 
+    public void PlayVFX()
+    {
+        var vfx = Instantiate(config.buttonVFX, transform.position, Quaternion.identity);
+        vfx.transform.localPosition = new Vector3(transform.position.x, transform.position.y, relativeZ);
+        vfx.GetComponent<ParticleSystem>().Play();
+
+        IEnumerator DestroyVFXRoutine()
+        {
+            yield return new WaitForSeconds(.6f);
+            onSliced.Invoke();
+            Destroy(vfx);
+        }
+        StartCoroutine(DestroyVFXRoutine());
+    }
+
     void Poof()
     {
         var sceneController = manager.GetComponent<SceneManagerController>();
         if (sceneController.isLoading) return;
 
-        var vfx = Instantiate(config.buttonVFX, transform.position, Quaternion.identity);
-        vfx.transform.localPosition = new Vector3(transform.position.x, transform.position.y, relativeZ);
-        vfx.GetComponent<ParticleSystem>().Play();
-        IEnumerator DestroyVFXRoutine()
-        {
-            yield return new WaitForSeconds(1f);
-            onSliced.Invoke();
-            Destroy(vfx);
-        }
-        StartCoroutine(DestroyVFXRoutine());
+        if (!isSlicable) return;
+
+        PlayVFX();
 
         onSlice.Invoke();
 

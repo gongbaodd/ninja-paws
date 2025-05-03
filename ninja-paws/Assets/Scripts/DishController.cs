@@ -12,6 +12,8 @@ public class DishController : MonoBehaviour
 
     [SerializeField] TMP_Text label;
 
+    [SerializeField] GameObject dishButton;
+
     [SerializeField] GameObject leftButton;
 
     [SerializeField] GameObject rightButton;
