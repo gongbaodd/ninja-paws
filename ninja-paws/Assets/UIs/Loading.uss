@@ -1,0 +1,11 @@
+.panel {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.39);
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    font-size: 48px;
+}

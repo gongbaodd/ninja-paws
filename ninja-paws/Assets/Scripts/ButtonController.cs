@@ -1,18 +1,29 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ButtonController : MonoBehaviour
 {
     GameManagerController manager;
     GameSettings config;
-
     [SerializeField] float relativeZ = -2f;
+    [SerializeField] UnityEvent onSliced;
+    AudioSource sfx;
     void Poof()
     {
         var vfx = Instantiate(config.buttonVFX, transform.position, Quaternion.identity);
         vfx.transform.localPosition = new Vector3(transform.position.x, transform.position.y, relativeZ);
         vfx.GetComponent<ParticleSystem>().Play();
+        IEnumerator DestroyVFXRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            Destroy(vfx);
 
-        gameObject.SetActive(false);
+            onSliced.Invoke();
+        }
+        StartCoroutine(DestroyVFXRoutine());
+
+        sfx.PlayOneShot(sfx.clip);
     }
     void OnTriggerEnter(Collider other)
     {
@@ -31,5 +42,6 @@ public class ButtonController : MonoBehaviour
     {
         manager = GameManagerController.Instance;
         config = manager.config;
+        sfx = GetComponent<AudioSource>();
     }
 }

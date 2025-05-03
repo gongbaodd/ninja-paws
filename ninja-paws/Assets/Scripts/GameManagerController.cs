@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(SceneManagerController))]
 public class GameManagerController : MonoBehaviour
 {
     public static GameManagerController Instance { get { return instance; } }
