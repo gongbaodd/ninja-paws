@@ -13,19 +13,28 @@ public class ButtonController : MonoBehaviour
 
     bool isSlicable = true;
 
-    public void SetSlicable(bool isSlicable) {
+    public void SetSlicable(bool isSlicable)
+    {
         this.isSlicable = isSlicable;
     }
 
-    public void StartLoading() {
+    public void StartLoading()
+    {
         manager.GetComponent<SceneManagerController>().BeforeLoadScene();
     }
-    public void GotoLevelsScene() {
+    public void GotoLevelsScene()
+    {
         manager.GetComponent<SceneManagerController>().GotoLevelMenuScene();
     }
 
-    public void GotoStartScene() {
+    public void GotoStartScene()
+    {
         manager.GetComponent<SceneManagerController>().GotoStartScene();
+    }
+
+    public void GotoGameScene()
+    {
+        manager.GetComponent<SceneManagerController>().GotoGameScene();
     }
 
     public void PlayVFX()

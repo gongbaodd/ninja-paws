@@ -8,6 +8,8 @@ public class GameManagerController : MonoBehaviour
     static GameManagerController instance;
     public GameSettings config;
 
+    public int dishIndex = 0;
+
     void InitPlayerSettings() {
         bool playerUseMotion = PlayerPrefs.GetInt("UseMotion") == 1;
         config.useMotion = playerUseMotion;

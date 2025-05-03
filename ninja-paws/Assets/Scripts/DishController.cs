@@ -35,6 +35,10 @@ public class DishController : MonoBehaviour
         index = (index - 1 + length) % length;
     }
 
+    public void SetDish() {
+        manager.dishIndex = index;
+    }
+
     void UpdateIngredients() {
         var Items = Items3;
         switch(dishes[index].ingredients.Length) {

@@ -81,7 +81,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loading: {fileID: 2267496065641965001}
   isLoading: 0
-  currentScene: 0
   levelMenuScene:
     m_AssetGUID: 6f7793c566a643346a8db313c18a7e13
     m_SubObjectName: 
@@ -90,6 +89,12 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   startScene:
     m_AssetGUID: ba7c39b1360340646af7925e6a049448
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  gameScene:
+    m_AssetGUID: f167291aaeb67bf49afd75eb7ef03c4b
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
