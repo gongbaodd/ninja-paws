@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManagerController : MonoBehaviour
 {
     public static GameManagerController Instance { get { return instance; } }
+    
     static GameManagerController instance;
     public GameSettings config;
 

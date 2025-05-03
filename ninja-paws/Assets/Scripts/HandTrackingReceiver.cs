@@ -141,20 +141,6 @@ public class HandTrackingReceiver : MonoBehaviour
         //     InitService();
         // }
     }
-    void OnDestroy()
-    {
-        // Unsubscribe
-        HandTrackingBehavior.OnDataReceived -= HandleMessage;
-
-        // Stop the server when the object is destroyed or game stops
-        if (wsServer != null && wsServer.IsListening)
-        {
-            Debug.Log("Stopping WebSocket Server...");
-            wsServer.Stop();
-            wsServer = null; // Allow garbage collection
-        }
-        Debug.Log("HandTrackingReceiver destroyed.");
-    }
 
     void Update()
     {
@@ -212,5 +198,22 @@ public class HandTrackingReceiver : MonoBehaviour
             float lerpT = Time.deltaTime / smoothingFactor;
             virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
         }
+    }
+
+    void OnDestroy()
+    {
+        if (!useMotion) return;
+        
+        // Unsubscribe
+        HandTrackingBehavior.OnDataReceived -= HandleMessage;
+
+        // Stop the server when the object is destroyed or game stops
+        if (wsServer != null && wsServer.IsListening)
+        {
+            Debug.Log("Stopping WebSocket Server...");
+            wsServer.Stop();
+            wsServer = null; // Allow garbage collection
+        }
+        Debug.Log("HandTrackingReceiver destroyed.");
     }
 }

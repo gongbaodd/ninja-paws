@@ -1,32 +1,61 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Collections;
+using UnityEngine.SceneManagement;
+
+public enum GameScene {
+    Start,
+    Levels,
+}
 
 public class SceneManagerController : MonoBehaviour
 {
     [SerializeField] GameObject loading;
-    [SerializeField] AssetReference levelMenuScene;
     AsyncOperationHandle loadHandler;
-    public void BeforeLoadScene() {
+    AsyncOperationHandle unloadHandler;
+    public bool isLoading = false;
+
+    public GameScene currentScene = GameScene.Start;
+    public void BeforeLoadScene()
+    {
         loading.SetActive(true);
+        isLoading = true;
     }
 
-    public void GotoLevelMenuScene() {
+    void LoadScene(AssetReference scene)
+    {
+        print("loading");
+        if (loadHandler.IsValid())
+        {
+            unloadHandler = Addressables.UnloadSceneAsync(loadHandler, true);
 
-        loadHandler = levelMenuScene.LoadSceneAsync(LoadSceneMode.Single);
+            unloadHandler.Completed += (handle) => {
+                print("unloaded");
+            };
+        }
 
-        loadHandler.Completed += (handle) => {
+        loadHandler = scene.LoadSceneAsync(LoadSceneMode.Single, true);
+
+        loadHandler.Completed += (handle) =>
+        {
             loading.SetActive(false);
+            isLoading = false;
         };
     }
-
-    IEnumerator UnloadPreviousSceneDelay(float seconds) {
-        yield return new WaitForSeconds(seconds);
+    [SerializeField] AssetReference levelMenuScene;
+    public void GotoLevelMenuScene()
+    {
+        LoadScene(levelMenuScene);
+        currentScene = GameScene.Levels;
     }
 
+    [SerializeField] AssetReference startScene;
+    public void GotoStartScene()
+    {
+        LoadScene(startScene);
+        currentScene = GameScene.Start;
+    }
     void Awake()
     {
         loading.SetActive(false);

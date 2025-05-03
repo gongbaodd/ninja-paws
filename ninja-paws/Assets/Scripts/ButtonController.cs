@@ -10,8 +10,24 @@ public class ButtonController : MonoBehaviour
     [SerializeField] UnityEvent onSlice;
     [SerializeField] UnityEvent onSliced;
     AudioSource sfx;
+
+    public void StartLoading() {
+        manager.GetComponent<SceneManagerController>().BeforeLoadScene();
+    }
+
+    public void GotoLevelsScene() {
+        manager.GetComponent<SceneManagerController>().GotoLevelMenuScene();
+    }
+
+    public void GotoStartScene() {
+        manager.GetComponent<SceneManagerController>().GotoStartScene();
+    }
+
     void Poof()
     {
+        var sceneController = manager.GetComponent<SceneManagerController>();
+        if (sceneController.isLoading) return;
+
         var vfx = Instantiate(config.buttonVFX, transform.position, Quaternion.identity);
         vfx.transform.localPosition = new Vector3(transform.position.x, transform.position.y, relativeZ);
         vfx.GetComponent<ParticleSystem>().Play();
@@ -22,7 +38,7 @@ public class ButtonController : MonoBehaviour
             Destroy(vfx);
         }
         StartCoroutine(DestroyVFXRoutine());
-        
+
         onSlice.Invoke();
 
         sfx.PlayOneShot(sfx.clip);

@@ -80,8 +80,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loading: {fileID: 2267496065641965001}
+  isLoading: 0
+  currentScene: 0
   levelMenuScene:
     m_AssetGUID: 6f7793c566a643346a8db313c18a7e13
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  startScene:
+    m_AssetGUID: ba7c39b1360340646af7925e6a049448
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
@@ -110,7 +118,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: eae50a7090426ce4a9857fe3bf3faf62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
