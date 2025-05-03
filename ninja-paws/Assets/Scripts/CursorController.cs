@@ -86,7 +86,7 @@ public class CursorController : MonoBehaviour
     void Update()
     {
         Vector3 currentMousePosition = Input.mousePosition;
-        mouseSpeed = (currentMousePosition - lastMousePosition).magnitude / Time.deltaTime;
+        mouseSpeed = (currentMousePosition - lastMousePosition).magnitude / Time.unscaledDeltaTime;
         lastMousePosition = currentMousePosition;
 
         if (!isDrawing && mouseSpeed > drawingSpeedThreshold)

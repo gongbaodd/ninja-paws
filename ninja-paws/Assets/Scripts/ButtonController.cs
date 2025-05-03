@@ -37,6 +37,11 @@ public class ButtonController : MonoBehaviour
         manager.GetComponent<SceneManagerController>().GotoGameScene();
     }
 
+    public void ReloadScene()
+    {
+        manager.GetComponent<SceneManagerController>().ReloadScene();
+    }
+
     public void PlayVFX()
     {
         var vfx = Instantiate(config.buttonVFX, transform.position, Quaternion.identity);

@@ -50,6 +50,11 @@ public class SceneManagerController : MonoBehaviour
         LoadScene(gameScene);
     }
 
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+    }
+
     void Awake()
     {
         loading.SetActive(false);

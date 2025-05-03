@@ -5,7 +5,6 @@ public class DishController : MonoBehaviour
 {
     GameManagerController manager;
     GameSettings config;
-
     DishConfig[] dishes;
 
     [SerializeField] GameObject dishRenderer;
