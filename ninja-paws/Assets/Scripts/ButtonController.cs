@@ -7,6 +7,7 @@ public class ButtonController : MonoBehaviour
     GameManagerController manager;
     GameSettings config;
     [SerializeField] float relativeZ = -2f;
+    [SerializeField] UnityEvent onSlice;
     [SerializeField] UnityEvent onSliced;
     AudioSource sfx;
     void Poof()
@@ -17,11 +18,12 @@ public class ButtonController : MonoBehaviour
         IEnumerator DestroyVFXRoutine()
         {
             yield return new WaitForSeconds(1f);
-            Destroy(vfx);
-
             onSliced.Invoke();
+            Destroy(vfx);
         }
         StartCoroutine(DestroyVFXRoutine());
+        
+        onSlice.Invoke();
 
         sfx.PlayOneShot(sfx.clip);
     }
