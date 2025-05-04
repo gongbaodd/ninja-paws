@@ -82,12 +82,16 @@ public class IngredientController : MonoBehaviour
 
     public static event System.Action<GameObject> OnDeactived;
 
+    public static event System.Action<IngredientConfig> OnCaught;
+
     void Caught()
     {
         sphereCollider.enabled = false;
         caughtVFX.SetActive(true);
         item.SetActive(false);
         sfx.PlayOneShot(caughtClip);
+
+        OnCaught?.Invoke(config);
 
         IEnumerator WaitForDeactivedRoutine() {
             yield return new WaitForSeconds(gameConfig.vfxTime);
