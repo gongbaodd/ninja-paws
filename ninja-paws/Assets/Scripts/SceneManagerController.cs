@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System;
 
 
 public class SceneManagerController : MonoBehaviour
@@ -19,18 +21,22 @@ public class SceneManagerController : MonoBehaviour
 
     void LoadScene(AssetReference scene)
     {
+        StartCoroutine(LoadSceneAsync(scene));
+    }
+
+    IEnumerator LoadSceneAsync(AssetReference scene)
+    {
         if (loadHandler.IsValid())
         {
-            Addressables.UnloadSceneAsync(loadHandler, true);
+            var unLoadHandle = Addressables.UnloadSceneAsync(loadHandler, true);
+            yield return unLoadHandle;
         }
 
         loadHandler = scene.LoadSceneAsync(LoadSceneMode.Single, true);
+        yield return loadHandler;
 
-        loadHandler.Completed += (handle) =>
-        {
-            loading.SetActive(false);
-            isLoading = false;
-        };
+        loading.SetActive(false);
+        isLoading = false;
     }
     [SerializeField] AssetReference levelMenuScene;
     public void GotoLevelMenuScene()
@@ -45,9 +51,15 @@ public class SceneManagerController : MonoBehaviour
     }
 
     [SerializeField] AssetReference gameScene;
-    public void GotoGameScene() 
+    public void GotoGameScene()
     {
         LoadScene(gameScene);
+    }
+
+    [SerializeField] AssetReference endScene;
+    public void GotoEndScene()
+    {
+        LoadScene(endScene);
     }
 
     public void ReloadScene()

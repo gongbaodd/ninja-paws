@@ -18,6 +18,8 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
+        if (timeLeft < 0) return;
+
         timeLeft -= Time.deltaTime;
         if (timeLeft < config.showCountDownTime + 1) {
             label.text = timeLeft.ToString("0");

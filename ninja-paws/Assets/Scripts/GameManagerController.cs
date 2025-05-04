@@ -33,6 +33,9 @@ public class GameManagerController : MonoBehaviour
 
     void OnGameEnd() {
         sfx.PlayOneShot(config.timesUpSFX);
+
+        var sceneController = GetComponent<SceneManagerController>();
+        sceneController.GotoEndScene();
     }
 
     public bool KeepSpawnIngredients = false;
