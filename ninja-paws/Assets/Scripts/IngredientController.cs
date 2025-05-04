@@ -14,6 +14,7 @@ public class IngredientController : MonoBehaviour
     GameManagerController manager;
     GameSettings gameConfig;
     Vector2 targetPos;
+    float removeY;
     IngredientConfig config;
     AudioClip spawnClip;
     [SerializeField] GameObject item;
@@ -49,6 +50,11 @@ public class IngredientController : MonoBehaviour
         {
             item.GetComponent<SpriteRenderer>().sprite = config.sprite;
         }
+        
+        var spawnWidth = gameConfig.spawnWidth;
+        var spawnHeight = gameConfig.spawnHeight;
+        transform.position = new Vector3(Random.Range(-spawnWidth, spawnWidth), spawnHeight, transform.position.z);
+
         item.SetActive(true);
 
         var isWanted = wanted.Contains(config);
@@ -85,6 +91,9 @@ public class IngredientController : MonoBehaviour
         var target = GameObject.FindWithTag("Target");
         targetPos = target.transform.position;
 
+        var removeBar = GameObject.FindWithTag("RemoveBar");
+        removeY = removeBar.transform.position.y;
+
         sfx = GetComponent<AudioSource>();
     }
     void Start()
@@ -104,6 +113,12 @@ public class IngredientController : MonoBehaviour
             {
                 Caught();
             }
+        }
+    }
+    void Update()
+    {
+        if (transform.position.y < removeY) {
+            gameObject.SetActive(false);
         }
     }
 }
