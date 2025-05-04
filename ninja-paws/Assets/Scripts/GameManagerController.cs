@@ -8,9 +8,13 @@ public class GameManagerController : MonoBehaviour
     
     static GameManagerController instance;
     public GameSettings config;
-
     public List<IngredientConfig> ingredients = new();
     public int dishIndex = 0;
+    public IngredientConfig[] WantedIngredients {
+        get {
+            return config.dishes[dishIndex].ingredients;
+        }
+    }
 
     void InitPlayerSettings() {
         bool playerUseMotion = PlayerPrefs.GetInt("UseMotion") == 1;

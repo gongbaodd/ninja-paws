@@ -43,7 +43,7 @@ namespace Assets.Scenes.FruitNinja.Scripts
             var spawnWidth = config.spawnWidth;
             var spawnHeight = config.spawnHeight;
 
-            bool isSpawnBomb = Random.Range(0, bombWeight + fruitWeight) < bombWeight ? true : false;
+            bool isSpawnBomb = Random.Range(0, bombWeight + fruitWeight) < bombWeight;
 
             if (isSpawnBomb)
             {

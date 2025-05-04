@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FxTemporaire
   - ingredient
+  - Target
   layers:
   - Default
   - TransparentFX

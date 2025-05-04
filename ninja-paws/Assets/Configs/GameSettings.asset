@@ -45,3 +45,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 832d9a6bc6b4ba34696f9026016d674f, type: 2}
   - {fileID: 11400000, guid: 1a1dc5f3e060c784893ce353348ef754, type: 2}
   - {fileID: 11400000, guid: 9396e169e72107d488fcf95d562b009a, type: 2}
+  target: {fileID: 0}
+  spawnHeight: -5
+  spawnWidth: 10
+  spawnDelay: 1
+  wantedWeight: 50
+  allWeight: 50
+  timeInSeconds: 60
+  showCountDownTime: 5
