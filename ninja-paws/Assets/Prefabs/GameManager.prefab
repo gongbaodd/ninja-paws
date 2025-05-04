@@ -52,6 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 70222ec3682b3334f89e3c7adeb7b62f, type: 2}
+  ingredients: []
+  dishIndex: 0
+  KeepSpawnIngredients: 0
 --- !u!114 &6759017828133097184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +102,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  endScene:
+    m_AssetGUID: 62586a229c13cfd4b8fb65d06943b52f
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!120 &7574563614239261300
 LineRenderer:
   serializedVersion: 2
@@ -123,7 +132,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eae50a7090426ce4a9857fe3bf3faf62, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

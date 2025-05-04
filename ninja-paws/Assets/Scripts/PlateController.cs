@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PlateController : MonoBehaviour
@@ -7,21 +8,47 @@ public class PlateController : MonoBehaviour
     public DishConfig dishConfig;
     [SerializeField] GameObject dishRenderer;
     [SerializeField] GameObject flag;
+    [SerializeField] TMP_Text label;
+    [SerializeField] GameObject Items3;
+    [SerializeField] GameObject Items4;
+    [SerializeField] GameObject Items5;
 
-    void Start() 
+    void UpdateIngredients()
     {
-        manager = GameManagerController.Instance;
-        config = manager.config;
-        dishConfig = dishConfig == null ?  manager.CurrentDish : dishConfig;
-    }
-
-    void Update()
-    {
-        if (dishConfig.sprite) {
-            dishRenderer.GetComponent<SpriteRenderer>().sprite = dishConfig.sprite;
+        var Items = Items3;
+        switch (dishConfig.ingredients.Length)
+        {
+            case 3:
+                Items = Items3;
+                break;
+            case 4:
+                Items = Items4;
+                break;
+            case 5:
+                Items = Items5;
+                break;
         }
 
-        switch (dishConfig.country) {
+        var dish = dishConfig;
+
+        for (int i = 0; i < dish.ingredients.Length; i++)
+        {
+            var ingredient = dish.ingredients[i];
+            var item = Items.transform.GetChild(i).gameObject;
+
+            if (ingredient.sprite)
+            {
+                item.GetComponent<SpriteRenderer>().sprite = ingredient.sprite;
+            }
+            var label = item.transform.GetChild(0).GetComponent<TMP_Text>();
+            label.text = ingredient.itemName;
+        }
+    }
+
+    void UpdateFlag()
+    {
+        switch (dishConfig.country)
+        {
             case DishConfig.Country.Estonia:
                 flag.GetComponent<Renderer>().material = config.EstoniaFlag;
                 break;
@@ -32,5 +59,38 @@ public class PlateController : MonoBehaviour
                 flag.GetComponent<Renderer>().material = config.LithuaniaFlag;
                 break;
         }
+    }
+
+    void Awake()
+    {
+        Items3.SetActive(false);
+        Items4.SetActive(false);
+        Items5.SetActive(false);
+    }
+
+
+    void Start()
+    {
+        manager = GameManagerController.Instance;
+        config = manager.config;
+        dishConfig = dishConfig == null ? manager.CurrentDish : dishConfig;
+    }
+
+    void Update()
+    {
+        if (dishConfig.sprite)
+        {
+            dishRenderer.GetComponent<SpriteRenderer>().sprite = dishConfig.sprite;
+        }
+
+        UpdateFlag();
+
+        label.text = dishConfig.itemName;
+
+        Items3.SetActive(dishConfig.ingredients.Length == 3);
+        Items4.SetActive(dishConfig.ingredients.Length == 4);
+        Items5.SetActive(dishConfig.ingredients.Length == 5);
+
+        UpdateIngredients();
     }
 }

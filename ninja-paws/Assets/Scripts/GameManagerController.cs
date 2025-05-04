@@ -38,7 +38,7 @@ public class GameManagerController : MonoBehaviour
 
     AudioSource sfx;
 
-    IndicatorController.State gameState;
+    public IndicatorController.State gameState;
     void OnIndicatorStateUpdate(IndicatorController.State state) {
         gameState = state;
     }
