@@ -21,6 +21,8 @@ MonoBehaviour:
   unWantedVFX: {fileID: 1103743389646759790, guid: 8cd7b1267ea3f1f4f8a402cee4ece10a, type: 3}
   unWantedSFX: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
   allCollectedSFX: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  redoSFX: {fileID: 8300000, guid: bb6cdd13aeb95f743847b1cd460889bc, type: 3}
+  redoVFX: {fileID: 1524533970525000399, guid: 1133dff0b5fda2e4295d301899b1582d, type: 3}
   timesUpSFX: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   dishes:
   - {fileID: 11400000, guid: ba6be66bfcf67bc45b7750343b0f4857, type: 2}

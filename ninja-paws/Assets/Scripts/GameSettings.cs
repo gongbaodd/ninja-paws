@@ -14,6 +14,8 @@ public class GameSettings : ScriptableObject
     public GameObject unWantedVFX;
     public AudioClip unWantedSFX;
     public AudioClip allCollectedSFX;
+    public AudioClip redoSFX;
+    public GameObject redoVFX;
     public AudioClip timesUpSFX;
     public DishConfig[] dishes;
     public float spawnHeight = -5f;

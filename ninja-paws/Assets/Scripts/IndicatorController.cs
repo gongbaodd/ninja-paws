@@ -21,7 +21,7 @@ public class IndicatorController : MonoBehaviour
     }
     readonly List<CheckItem> checkItems = new();
     bool isCollectSfxPlayed = false;
-
+    GameObject redoVFX;
     void InitItems()
     {
         Items3.SetActive(dish.ingredients.Length == 3);
@@ -81,6 +81,33 @@ public class IndicatorController : MonoBehaviour
 
                 StartCoroutine(PlaySfxRoutine());
             }
+        } else {
+            IEnumerator PlaySfxRoutine()
+            {
+                yield return new WaitForSeconds(config.vfxTime);
+                sfx.PlayOneShot(config.redoSFX);
+                redoVFX.SetActive(true);
+                redoVFX.GetComponent<ParticleSystem>().Play();
+                yield return DeactiveRedoVFXRoutine();
+            }
+
+            IEnumerator DeactiveRedoVFXRoutine() {
+                yield return new WaitForSeconds(config.vfxTime);
+                redoVFX.SetActive(false);
+            }
+
+            for(int i =0; i< checkItems.Count; i++)
+            {
+                var checkItem = checkItems[i];
+                checkItem.isChecked = false;
+                checkItems[i] = checkItem;
+
+                var indicateItem = Items.transform.GetChild(i).gameObject;
+                var check = indicateItem.transform.Find("check").gameObject;
+                check.SetActive(false);
+            }
+
+            StartCoroutine(PlaySfxRoutine());
         }
     }
 
@@ -98,6 +125,10 @@ public class IndicatorController : MonoBehaviour
         dish = dishes[manager.dishIndex];
 
         InitItems();
+
+        var vfxPos = new Vector3(Items.transform.position.x, Items.transform.position.y, 0f);
+        redoVFX = Instantiate(config.redoVFX, vfxPos, Quaternion.identity);
+        redoVFX.SetActive(false);
 
         IngredientController.OnCaught += OnIngredientCaught;
     }
