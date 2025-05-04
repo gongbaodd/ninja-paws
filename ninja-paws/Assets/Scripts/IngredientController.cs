@@ -1,3 +1,5 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,7 +10,8 @@ public class IngredientController : MonoBehaviour
     GameSettings gameConfig;
     Vector2 targetPos;
     IngredientConfig config;
-
+    GameObject caughtVFX;
+    [SerializeField] GameObject item;
     Vector2 CalculateForceDirection()
     {
         Vector2 pos = transform.position;
@@ -26,9 +29,9 @@ public class IngredientController : MonoBehaviour
         var allWeight = gameConfig.allWeight;
         var wantedWeight = gameConfig.wantedWeight;
 
-        bool isWanted = Random.Range(0, allWeight + wantedWeight) < wantedWeight;
+        bool isInWanted = Random.Range(0, allWeight + wantedWeight) < wantedWeight;
 
-        if (isWanted)
+        if (isInWanted)
         {
             config = wanted[Random.Range(0, wanted.Length)];
         }
@@ -36,6 +39,25 @@ public class IngredientController : MonoBehaviour
         {
             config = all[Random.Range(0, all.Length)];
         }
+
+        var isWanted = wanted.Contains(config);
+        var wantedVFX = gameConfig.wantedVFX;
+        var unWantedVFX = gameConfig.unWantedVFX;
+        var position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        caughtVFX = Instantiate(isWanted ? wantedVFX : unWantedVFX, position, Quaternion.identity, transform);
+        caughtVFX.SetActive(false);
+
+        if (config.sprite) {
+            item.GetComponent<SpriteRenderer>().sprite = config.sprite;
+        }
+        item.SetActive(true);
+    }
+
+    void Caught()
+    {
+        caughtVFX.SetActive(true);
+        item.SetActive(false);
     }
     public void Spawn()
     {
@@ -57,5 +79,15 @@ public class IngredientController : MonoBehaviour
 
         Spawn();
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            var cursor = manager.GetComponent<CursorController>();
+            if (cursor.IsDrawing)
+            {
+                Caught();
+            }
+        }
+    }
 }

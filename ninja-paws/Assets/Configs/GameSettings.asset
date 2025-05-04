@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useMotion: 0
   buttonVFX: {fileID: 1059396251222821467, guid: 6f40d476b685ff04cab7f26744984544, type: 3}
+  wantedVFX: {fileID: 1059396251222821467, guid: 6f40d476b685ff04cab7f26744984544, type: 3}
+  unWantedVFX: {fileID: 1103743389646759790, guid: 8cd7b1267ea3f1f4f8a402cee4ece10a, type: 3}
   dishes:
   - {fileID: 11400000, guid: ba6be66bfcf67bc45b7750343b0f4857, type: 2}
   - {fileID: 11400000, guid: 9aebeb1aab978cc4ea91a39890a1f956, type: 2}
@@ -45,7 +47,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 832d9a6bc6b4ba34696f9026016d674f, type: 2}
   - {fileID: 11400000, guid: 1a1dc5f3e060c784893ce353348ef754, type: 2}
   - {fileID: 11400000, guid: 9396e169e72107d488fcf95d562b009a, type: 2}
-  target: {fileID: 0}
   spawnHeight: -5
   spawnWidth: 10
   spawnDelay: 1

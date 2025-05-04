@@ -4,9 +4,9 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     public bool useMotion = false;
-
     public GameObject buttonVFX;
-
+    public GameObject wantedVFX;
+    public GameObject unWantedVFX;
     public DishConfig[] dishes;
     public float spawnHeight = -5f;
     public float spawnWidth = 10f;
