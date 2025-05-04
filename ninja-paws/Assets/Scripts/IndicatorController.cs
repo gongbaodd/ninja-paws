@@ -18,6 +18,7 @@ public class IndicatorController : MonoBehaviour
     public struct CheckItem {
         public string itemName;
         public bool isChecked;
+        public int count;
     }
     readonly List<CheckItem> checkItems = new();
     bool isCollectSfxPlayed = false;
@@ -50,7 +51,7 @@ public class IndicatorController : MonoBehaviour
             label.text = itemName;
             item.name = itemName;
 
-            checkItems.Add(new CheckItem { itemName = itemName, isChecked = false });
+            checkItems.Add(new CheckItem { itemName = itemName, isChecked = false, count = 0 });
         }
     }
 
@@ -73,6 +74,7 @@ public class IndicatorController : MonoBehaviour
             var checkItemIndex = checkItems.FindIndex(x => x.itemName == itemConfig.itemName);
             var checkItem = checkItems[checkItemIndex];
             checkItem.isChecked = true;
+            checkItem.count++;
             checkItems[checkItemIndex] = checkItem;
 
             if (checkItems.TrueForAll(x => x.isChecked))
@@ -107,6 +109,7 @@ public class IndicatorController : MonoBehaviour
             {
                 var checkItem = checkItems[i];
                 checkItem.isChecked = false;
+                checkItem.count = 0;
                 checkItems[i] = checkItem;
 
                 var indicateItem = Items.transform.GetChild(i).gameObject;

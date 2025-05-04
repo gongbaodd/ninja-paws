@@ -6,22 +6,13 @@ public class DishController : MonoBehaviour
     GameManagerController manager;
     GameSettings config;
     DishConfig[] dishes;
-
-    [SerializeField] GameObject dishRenderer;
-
     [SerializeField] TMP_Text label;
-
-    [SerializeField] GameObject dishButton;
-
     [SerializeField] GameObject leftButton;
-
     [SerializeField] GameObject rightButton;
-
     [SerializeField] GameObject Items3;
-
     [SerializeField] GameObject Items4;
-
     [SerializeField] GameObject Items5;
+    [SerializeField] GameObject plate;
 
     int index = 0;
     int length = 0;
@@ -87,10 +78,8 @@ public class DishController : MonoBehaviour
         rightButton.SetActive(index < length - 1);
 
         label.text = dishes[index].itemName;
-
-        if (dishes[index].sprite) {
-            dishRenderer.GetComponent<SpriteRenderer>().sprite = dishes[index].sprite;
-        }
+        
+        plate.GetComponent<PlateController>().dishConfig = dishes[index];
 
         Items3.SetActive(dishes[index].ingredients.Length == 3);
         Items4.SetActive(dishes[index].ingredients.Length == 4);

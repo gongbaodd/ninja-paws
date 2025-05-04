@@ -18,6 +18,12 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
+    public DishConfig CurrentDish {
+        get {
+            return config.dishes[dishIndex];
+        }
+    }
+
     void InitPlayerSettings() {
         bool playerUseMotion = PlayerPrefs.GetInt("UseMotion") == 1;
         config.useMotion = playerUseMotion;

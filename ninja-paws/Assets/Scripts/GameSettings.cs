@@ -5,6 +5,12 @@ public class GameSettings : ScriptableObject
 {
     [Header("start scene")]
     public bool useMotion = false;
+
+    [Header("levels scene")]
+    public Material EstoniaFlag;
+    public Material LatviaFlag;
+    public Material LithuaniaFlag;
+
     [Header("game scene")]
     public GameObject buttonVFX;
     public AudioClip buttonSFX;
