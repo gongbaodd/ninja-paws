@@ -21,6 +21,7 @@ MonoBehaviour:
   unWantedVFX: {fileID: 1103743389646759790, guid: 8cd7b1267ea3f1f4f8a402cee4ece10a, type: 3}
   unWantedSFX: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
   allCollectedSFX: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  timesUpSFX: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   dishes:
   - {fileID: 11400000, guid: ba6be66bfcf67bc45b7750343b0f4857, type: 2}
   - {fileID: 11400000, guid: 9aebeb1aab978cc4ea91a39890a1f956, type: 2}
@@ -57,7 +58,7 @@ MonoBehaviour:
   spawnDelay: 1
   wantedWeight: 50
   allWeight: 50
-  timeInSeconds: 60
+  timeInSeconds: 30
   showCountDownTime: 5
   ingredientsPoolSize: 50
   vfxTime: 0.6

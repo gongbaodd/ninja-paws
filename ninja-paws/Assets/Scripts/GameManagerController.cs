@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SceneManagerController))]
+[RequireComponent(typeof(AudioSource))]
 public class GameManagerController : MonoBehaviour
 {
     public static GameManagerController Instance { get { return instance; } }
@@ -28,6 +29,12 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
+    AudioSource sfx;
+
+    void OnGameEnd() {
+        sfx.PlayOneShot(config.timesUpSFX);
+    }
+
     public bool KeepSpawnIngredients = false;
 
     void Awake()
@@ -43,8 +50,18 @@ public class GameManagerController : MonoBehaviour
         }
 
         InitPlayerSettings();
-
         CollectIngredients();
+        sfx = GetComponent<AudioSource>();
+    }
+
+    void Start()
+    {
+        TimerController.OnTimeout += OnGameEnd;
+    }
+
+    void OnDestroy()
+    {
+        TimerController.OnTimeout -= OnGameEnd;
     }
 
 }

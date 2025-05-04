@@ -19,7 +19,7 @@ public class IndicatorController : MonoBehaviour
         public string itemName;
         public bool isChecked;
     }
-    List<CheckItem> checkItems = new();
+    readonly List<CheckItem> checkItems = new();
     bool isCollectSfxPlayed = false;
 
     void InitItems()
