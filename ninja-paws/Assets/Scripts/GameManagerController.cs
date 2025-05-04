@@ -40,10 +40,12 @@ public class GameManagerController : MonoBehaviour
     void OnGameEnd() {
         sfx.PlayOneShot(config.timesUpSFX);
         KeepSpawnIngredients = false;
+        
+        var sceneController = GetComponent<SceneManagerController>();
+        sceneController.BeforeLoadScene();
 
         IEnumerator GotoEndAsync() {
             yield return new WaitForSeconds(config.vfxTime);
-            var sceneController = GetComponent<SceneManagerController>();
             sceneController.GotoEndScene();
         }
 
