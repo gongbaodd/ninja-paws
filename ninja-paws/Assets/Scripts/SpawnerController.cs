@@ -37,9 +37,11 @@ public class SpawnerController : MonoBehaviour
     }
 
     IEnumerator SpawnRoutine() {
-        while(manager.KeepSpawnIngredients) {
+        while(true) {
             yield return new WaitForSeconds(config.spawnDelay);
-            pool.Get();
+            if (manager.KeepSpawnIngredients) {
+                pool.Get();
+            }
         }
     }
 
