@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Ending
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
-  m_GUID: 0e7f852d20e34b840940eed472c846d6
+  m_GroupName: Ending
+  m_GUID: de9a45bb33062b94eb27f33d3d7ba2a4
   m_SerializeEntries:
-  - m_GUID: ba7c39b1360340646af7925e6a049448
-    m_Address: Assets/Scenes/Start.unity
+  - m_GUID: 62586a229c13cfd4b8fb65d06943b52f
+    m_Address: Assets/Scenes/Ending.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -24,5 +24,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 6a247ffb7c8c9504a9f079dbe410f749, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 25bbb4127339731499282875f820d708, type: 2}
-    - {fileID: 11400000, guid: 8f2fc77e107f19a44af131ccd3f1baac, type: 2}
+    - {fileID: 11400000, guid: 5539b0c5c6286d34fa160aae4129bbd2, type: 2}
+    - {fileID: 11400000, guid: c6855530a6de0ba42a1be0917831947f, type: 2}

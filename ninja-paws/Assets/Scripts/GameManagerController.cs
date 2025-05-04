@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,11 +32,22 @@ public class GameManagerController : MonoBehaviour
 
     AudioSource sfx;
 
+    IndicatorController.State gameState;
+    void OnIndicatorStateUpdate(IndicatorController.State state) {
+        gameState = state;
+    }
+
     void OnGameEnd() {
         sfx.PlayOneShot(config.timesUpSFX);
+        KeepSpawnIngredients = false;
 
-        var sceneController = GetComponent<SceneManagerController>();
-        sceneController.GotoEndScene();
+        IEnumerator GotoEndAsync() {
+            yield return new WaitForSeconds(config.vfxTime);
+            var sceneController = GetComponent<SceneManagerController>();
+            sceneController.GotoEndScene();
+        }
+
+        StartCoroutine(GotoEndAsync());
     }
 
     public bool KeepSpawnIngredients = false;
@@ -60,11 +72,13 @@ public class GameManagerController : MonoBehaviour
     void Start()
     {
         TimerController.OnTimeout += OnGameEnd;
+        IndicatorController.OnIndicatorStateUpdate += OnIndicatorStateUpdate;
     }
 
     void OnDestroy()
     {
         TimerController.OnTimeout -= OnGameEnd;
+        IndicatorController.OnIndicatorStateUpdate -= OnIndicatorStateUpdate;
     }
 
 }

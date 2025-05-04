@@ -15,13 +15,14 @@ public class IndicatorController : MonoBehaviour
     [SerializeField] GameObject Items4;
     [SerializeField] GameObject Items5;
 
-    struct CheckItem {
+    public struct CheckItem {
         public string itemName;
         public bool isChecked;
     }
     readonly List<CheckItem> checkItems = new();
     bool isCollectSfxPlayed = false;
     GameObject redoVFX;
+    int redoCount = 0;
     void InitItems()
     {
         Items3.SetActive(dish.ingredients.Length == 3);
@@ -52,6 +53,12 @@ public class IndicatorController : MonoBehaviour
             checkItems.Add(new CheckItem { itemName = itemName, isChecked = false });
         }
     }
+
+    public struct State {
+        public List<CheckItem> checkItems;
+        public int redoCount;
+    }
+    public static event System.Action<State> OnIndicatorStateUpdate;
 
     void OnIngredientCaught(IngredientConfig itemConfig)
     {
@@ -107,8 +114,12 @@ public class IndicatorController : MonoBehaviour
                 check.SetActive(false);
             }
 
+            redoCount++;
+
             StartCoroutine(PlaySfxRoutine());
         }
+
+        OnIndicatorStateUpdate?.Invoke(new State { checkItems = checkItems, redoCount = redoCount });
     }
 
     void Awake()
