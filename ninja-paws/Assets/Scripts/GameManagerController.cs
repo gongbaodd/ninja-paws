@@ -28,6 +28,8 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
+    public bool KeepSpawnIngredients = false;
+
     void Awake()
     {
         if (instance != null && instance != this)

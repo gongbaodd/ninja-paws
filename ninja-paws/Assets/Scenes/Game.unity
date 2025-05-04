@@ -1517,6 +1517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1348181881}
+  - component: {fileID: 1348181882}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -1539,6 +1540,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1348181882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348181880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a2902c39bfd9d49992ee7eb2f94c94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 8353297066997916825, guid: e3f40293b4f50484794042a81c7c99c0, type: 3}
 --- !u!1001 &1405374695
 PrefabInstance:
   m_ObjectHideFlags: 0

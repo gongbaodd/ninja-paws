@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,15 +9,13 @@ using UnityEngine;
 public class IngredientController : MonoBehaviour
 {
     Rigidbody rb;
+    SphereCollider sphereCollider;
     AudioSource sfx;
     AudioClip caughtClip;
     GameObject caughtVFX;
-    GameManagerController manager;
-    GameSettings gameConfig;
     Vector2 targetPos;
     float removeY;
     IngredientConfig config;
-    AudioClip spawnClip;
     [SerializeField] GameObject item;
     Vector2 CalculateForceDirection()
     {
@@ -28,10 +27,16 @@ public class IngredientController : MonoBehaviour
     {
         return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
     }
-    void Init()
+
+    GameManagerController manager;
+    GameSettings gameConfig;
+    void InitItems()
     {
+        manager = GameManagerController.Instance;
         var all = manager.ingredients.ToArray();
         var wanted = manager.WantedIngredients;
+        
+        gameConfig = manager.config;
         var allWeight = gameConfig.allWeight;
         var wantedWeight = gameConfig.wantedWeight;
 
@@ -55,6 +60,8 @@ public class IngredientController : MonoBehaviour
         var spawnHeight = gameConfig.spawnHeight;
         transform.position = new Vector3(Random.Range(-spawnWidth, spawnWidth), spawnHeight, transform.position.z);
 
+        sphereCollider.enabled = true;
+
         item.SetActive(true);
 
         var isWanted = wanted.Contains(config);
@@ -62,31 +69,52 @@ public class IngredientController : MonoBehaviour
         var unWantedVFX = gameConfig.unWantedVFX;
         var position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
+        if (caughtVFX)
+        {
+            Destroy(caughtVFX);
+        }
+
         caughtVFX = Instantiate(isWanted ? wantedVFX : unWantedVFX, position, Quaternion.identity, transform);
         caughtVFX.SetActive(false);
 
         caughtClip = isWanted ? gameConfig.wantedSFX : gameConfig.unWantedSFX;
     }
 
+    public static event System.Action<GameObject> OnDeactived;
+
     void Caught()
     {
+        sphereCollider.enabled = false;
         caughtVFX.SetActive(true);
         item.SetActive(false);
         sfx.PlayOneShot(caughtClip);
+
+        IEnumerator WaitForDeactivedRoutine() {
+            yield return new WaitForSeconds(gameConfig.vfxTime);
+            OnDeactived?.Invoke(gameObject);
+            gameObject.SetActive(false);
+        }
+
+        StartCoroutine(WaitForDeactivedRoutine());
     }
     public void Spawn()
     {
 
-        Init();
+        InitItems();
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.rotation = Quaternion.identity;
         
         rb.AddForce(CalculateForceDirection() * config.speed, ForceMode.Impulse);
         rb.AddTorque(RandomTorque() * config.torque, ForceMode.Impulse);
 
-        sfx.PlayOneShot(spawnClip);
+        sfx.PlayOneShot(gameConfig.spawnSFX);
     }
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        sphereCollider = GetComponent<SphereCollider>();
 
         var target = GameObject.FindWithTag("Target");
         targetPos = target.transform.position;
@@ -96,14 +124,7 @@ public class IngredientController : MonoBehaviour
 
         sfx = GetComponent<AudioSource>();
     }
-    void Start()
-    {
-        manager = GameManagerController.Instance;
-        gameConfig = manager.config;
-        spawnClip = gameConfig.spawnSFX;
 
-        Spawn();
-    }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -118,6 +139,7 @@ public class IngredientController : MonoBehaviour
     void Update()
     {
         if (transform.position.y < removeY) {
+            OnDeactived?.Invoke(gameObject);
             gameObject.SetActive(false);
         }
     }

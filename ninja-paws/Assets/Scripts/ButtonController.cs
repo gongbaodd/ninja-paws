@@ -50,7 +50,7 @@ public class ButtonController : MonoBehaviour
 
         IEnumerator DestroyVFXRoutine()
         {
-            yield return new WaitForSeconds(.6f);
+            yield return new WaitForSeconds(config.vfxTime);
             onSliced.Invoke();
             Destroy(vfx);
         }

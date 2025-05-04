@@ -3,7 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "Configs/setting")]
 public class GameSettings : ScriptableObject
 {
+    [Header("start scene")]
     public bool useMotion = false;
+    [Header("game scene")]
     public GameObject buttonVFX;
     public AudioClip buttonSFX;
     public AudioClip spawnSFX;
@@ -19,6 +21,9 @@ public class GameSettings : ScriptableObject
     public float allWeight = 50;
     public float timeInSeconds = 60f;
     public float showCountDownTime = 5f;
+    public int ingredientsPoolSize = 50;
+    [Header("all")]
+    public float vfxTime = 0.6f;
 
 }
 
