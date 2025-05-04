@@ -57,6 +57,12 @@ public class ButtonController : MonoBehaviour
         StartCoroutine(DestroyVFXRoutine());
     }
 
+    public void PlaySFX()
+    {
+        var clip = config.buttonSFX;
+        sfx.PlayOneShot(clip);
+    }
+
     void Poof()
     {
         var sceneController = manager.GetComponent<SceneManagerController>();
@@ -65,10 +71,9 @@ public class ButtonController : MonoBehaviour
         if (!isSlicable) return;
 
         PlayVFX();
+        PlaySFX();
 
         onSlice.Invoke();
-
-        sfx.PlayOneShot(sfx.clip);
     }
     void OnTriggerEnter(Collider other)
     {

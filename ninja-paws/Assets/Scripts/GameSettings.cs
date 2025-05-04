@@ -5,8 +5,12 @@ public class GameSettings : ScriptableObject
 {
     public bool useMotion = false;
     public GameObject buttonVFX;
+    public AudioClip buttonSFX;
+    public AudioClip spawnSFX;
     public GameObject wantedVFX;
+    public AudioClip wantedSFX;
     public GameObject unWantedVFX;
+    public AudioClip unWantedSFX;
     public DishConfig[] dishes;
     public float spawnHeight = -5f;
     public float spawnWidth = 10f;

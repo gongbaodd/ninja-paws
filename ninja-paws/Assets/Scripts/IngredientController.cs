@@ -3,14 +3,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(AudioSource))]
 public class IngredientController : MonoBehaviour
 {
     Rigidbody rb;
+    AudioSource sfx;
+    AudioClip caughtClip;
+    GameObject caughtVFX;
     GameManagerController manager;
     GameSettings gameConfig;
     Vector2 targetPos;
     IngredientConfig config;
-    GameObject caughtVFX;
+    AudioClip spawnClip;
     [SerializeField] GameObject item;
     Vector2 CalculateForceDirection()
     {
@@ -40,6 +45,12 @@ public class IngredientController : MonoBehaviour
             config = all[Random.Range(0, all.Length)];
         }
 
+        if (config.sprite)
+        {
+            item.GetComponent<SpriteRenderer>().sprite = config.sprite;
+        }
+        item.SetActive(true);
+
         var isWanted = wanted.Contains(config);
         var wantedVFX = gameConfig.wantedVFX;
         var unWantedVFX = gameConfig.unWantedVFX;
@@ -48,34 +59,39 @@ public class IngredientController : MonoBehaviour
         caughtVFX = Instantiate(isWanted ? wantedVFX : unWantedVFX, position, Quaternion.identity, transform);
         caughtVFX.SetActive(false);
 
-        if (config.sprite) {
-            item.GetComponent<SpriteRenderer>().sprite = config.sprite;
-        }
-        item.SetActive(true);
+        caughtClip = isWanted ? gameConfig.wantedSFX : gameConfig.unWantedSFX;
     }
 
     void Caught()
     {
         caughtVFX.SetActive(true);
         item.SetActive(false);
+        sfx.PlayOneShot(caughtClip);
     }
     public void Spawn()
     {
 
         Init();
+        
         rb.AddForce(CalculateForceDirection() * config.speed, ForceMode.Impulse);
         rb.AddTorque(RandomTorque() * config.torque, ForceMode.Impulse);
+
+        sfx.PlayOneShot(spawnClip);
     }
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
         var target = GameObject.FindWithTag("Target");
         targetPos = target.transform.position;
+
+        sfx = GetComponent<AudioSource>();
     }
     void Start()
     {
         manager = GameManagerController.Instance;
         gameConfig = manager.config;
+        spawnClip = gameConfig.spawnSFX;
 
         Spawn();
     }
