@@ -3,13 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import PosePkg from "@mediapipe/pose";
 import CameraPkg from "@mediapipe/camera_utils"
-import DrawUtilsPkg from "@mediapipe/drawing_utils";
 import Game from "./Game";
-import WebSocketComponent from "./WebSocket";
 
-const { Pose, POSE_CONNECTIONS } = PosePkg;
+const { Pose } = PosePkg;
 const { Camera } = CameraPkg;
-const { drawConnectors, drawLandmarks } = DrawUtilsPkg;
 const RIGHT_WRIST_INDEX = 16;
 
 export default function PoseDetection() {
@@ -82,17 +79,6 @@ function detectPose(
         canvasCtx.fillStyle = "#0000FF";
         canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
 
-        // Only overwrite missing pixels.
-        // canvasCtx.globalCompositeOperation = "destination-atop";
-        // canvasCtx.globalCompositeOperation = "source-over";
-        // drawConnectors(canvasCtx, result.poseLandmarks, POSE_CONNECTIONS, {
-        //     color: "#00FF00",
-        //     lineWidth: 4,
-        // });
-        // drawLandmarks(canvasCtx, result.poseLandmarks, {
-        //     color: "#FF0000",
-        //     lineWidth: 2,
-        // });
         canvasCtx.restore();
 
         getRightWristPos(result);

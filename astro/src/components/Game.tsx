@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import WebSocketComponent from "./WebSocket";
+const isDEV = import.meta.env.DEV;
 
 interface GameProps {
     cursorPos: { x: number; y: number };
@@ -47,8 +48,8 @@ export default function Game(props: GameProps) {
 
     return (
         <div>
-            <iframe ref={frameRef} title="game" src="./game/index.html" width="1300" height="780" />
-            {/* <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} /> */}
+            {!isDEV &&<iframe ref={frameRef} title="game" src="./game/index.html" width="1300" height="780" />}
+            {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} />}
         </div>
     );
 }
