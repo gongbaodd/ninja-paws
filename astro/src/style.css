@@ -1,6 +1,5 @@
 .pose {
     position: relative;
-    display: none;
 
     video {
         width: 1280px;
@@ -14,6 +13,10 @@
         width: 1280px;
         height: 720px;
     }
+}
+
+.pose.hide {
+    display: none;
 }
 
 

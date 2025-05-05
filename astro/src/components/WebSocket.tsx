@@ -23,27 +23,18 @@ export default function WebSocketComponent(props: {
       ws.current.onmessage = (event) => {
         console.log("Message from Unity:", event.data);
         setData(event.data);
-        
-        let parsedData;
-        try {
-          parsedData = JSON.parse(event.data);
-        } catch (error) {
-          console.error("Failed to parse message:", error);
-          return;
-        }
-        if (parsedData.type === "motion") {
-          props.onSetMotion(parsedData.data);
-        }
       };
 
       ws.current.onopen = () => {
         console.log("WebSocket connected to Unity");
         setData("WebSocket connected to Unity");
+        props.onSetMotion(true);
       };
 
       ws.current.onclose = (event) => {
         console.log("WebSocket disconnected:", event.reason);
 
+        props.onSetMotion(false);
         // Try to reconnect after a delay
         setTimeout(connectWebSocket, 5000);
       };

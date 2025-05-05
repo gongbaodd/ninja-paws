@@ -8,6 +8,7 @@ import Game from "./Game";
 const { Pose } = PosePkg;
 const { Camera } = CameraPkg;
 const RIGHT_WRIST_INDEX = 16;
+const isDEV = import.meta.env.DEV;
 
 export default function PoseDetection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -43,7 +44,7 @@ export default function PoseDetection() {
   return (
     <>
       <Game cursorPos={cursorPos} mask={mask} onSetMotion={onSetMotion} />
-      <div className="flex pose">
+      <div className={"flex pose " + isDEV && "hide"}>
         <video ref={videoRef} autoPlay playsInline></video>
         <canvas ref={canvasRef} width={1280} height={720}></canvas>
       </div>
@@ -85,7 +86,7 @@ export default function PoseDetection() {
 
       // Only overwrite existing pixels.
       canvasCtx.globalCompositeOperation = "source-in";
-      canvasCtx.fillStyle = "#0000FF";
+      canvasCtx.fillStyle = "#A66C48";
       canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
 
       canvasCtx.restore();

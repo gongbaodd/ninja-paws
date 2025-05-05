@@ -68,10 +68,21 @@ public class HandTrackingReceiver : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void SetUpDataListener(string gameObjectName);
+    [DllImport("__Internal")]
+    private static extern void StartMotionTracking();
+    [DllImport("__Internal")]
+    private static extern void StopMotionTracking();
+
+    struct MotionEvent {
+        public string type;
+        public bool data;
+    }
 
     void InitializeWebsocketServer()
     {
-#if UNITY_EDITOR && !UNITY_WEBGL
+
+#if UNITY_EDITOR
+        print("Initialize websocket");
 
         HandTrackingBehavior.OnDataReceived += HandleMessage;
 
@@ -102,6 +113,7 @@ public class HandTrackingReceiver : MonoBehaviour
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         SetUpDataListener(gameObject.name);
+        StartMotionTracking();
 #endif
     }
 
@@ -114,7 +126,7 @@ public class HandTrackingReceiver : MonoBehaviour
 
     private Texture2D previousTexture = null;
 
-    void InitService() {
+    public void InitService() {
         useMotion = true;
 
         InitializeWebsocketServer();
@@ -136,10 +148,6 @@ public class HandTrackingReceiver : MonoBehaviour
         {
             Debug.LogError("Could not find Main Camera in the scene. Please ensure a camera is tagged 'MainCamera'.", this);
         }
-
-        // if (GameManagerController.Instance.config.useMotion) {
-        //     InitService();
-        // }
     }
 
     void Update()
