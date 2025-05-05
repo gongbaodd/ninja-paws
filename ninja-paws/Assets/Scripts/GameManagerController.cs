@@ -37,6 +37,25 @@ public class GameManagerController : MonoBehaviour
     }
 
     AudioSource sfx;
+    [SerializeField] GameObject bgm;
+    public void PlayAmbience(AudioClip sound) {
+        if (sound == null) return;
+        if (sound == sfx.clip) return;
+        if (sfx.isPlaying) sfx.Stop();
+
+        sfx.clip = sound;
+        sfx.Play();
+    }
+
+    public void PlayBgm(AudioClip sound) {
+        var player = bgm.GetComponent<AudioSource>();
+        if (sound == null) return;
+        if (sound == player.clip) return;
+        if (player.isPlaying) player.Stop();
+
+        player.clip = sound;
+        player.Play();
+    }
 
     public IndicatorController.State gameState;
     void OnIndicatorStateUpdate(IndicatorController.State state) {
@@ -52,7 +71,7 @@ public class GameManagerController : MonoBehaviour
 
         IEnumerator GotoEndAsync() {
             yield return new WaitForSeconds(config.vfxTime);
-            sceneController.GotoEndScene();
+            yield return sceneController.GotoEndScene();
         }
 
         StartCoroutine(GotoEndAsync());

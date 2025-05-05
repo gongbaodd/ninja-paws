@@ -24,17 +24,17 @@ public class ButtonController : MonoBehaviour
     }
     public void GotoLevelsScene()
     {
-        manager.GetComponent<SceneManagerController>().GotoLevelMenuScene();
+        _ = manager.GetComponent<SceneManagerController>().GotoLevelMenuScene();
     }
 
     public void GotoStartScene()
     {
-        manager.GetComponent<SceneManagerController>().GotoStartScene();
+        _ = manager.GetComponent<SceneManagerController>().GotoStartScene();
     }
 
     public void GotoGameScene()
     {
-        manager.GetComponent<SceneManagerController>().GotoGameScene();
+        _ = manager.GetComponent<SceneManagerController>().GotoGameScene();
     }
 
     public void ReloadScene()
