@@ -11,5 +11,13 @@ mergeInto(LibraryManager.library, {
                 SendMessage(gameObjName, "HandleMessage", JSON.stringify(data));
             }
         });
-    }
+    },
+
+    StartMotionTracking: function() {
+        window.parent.postMessage({ type: "motion", data: true }, location.origin);
+    },
+
+    StopMotionTracking: function() {
+        window.parent.postMessage({ type: "motion", data: false }, location.origin);
+    },
 });

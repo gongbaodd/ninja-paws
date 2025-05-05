@@ -6,6 +6,7 @@ const UNITY_WEBSOCKET_URL = "ws://localhost:8080";
 export default function WebSocketComponent(props: {
   cursorPosMsg: CursorPosMsg | null;
   maskMsg: MaskMsg | null;
+  onSetMotion: (motion: boolean) => void;
 }) {
   const ws = useRef<WebSocket | null>(null);
   const [data, setData] = useState("");
@@ -22,6 +23,17 @@ export default function WebSocketComponent(props: {
       ws.current.onmessage = (event) => {
         console.log("Message from Unity:", event.data);
         setData(event.data);
+        
+        let parsedData;
+        try {
+          parsedData = JSON.parse(event.data);
+        } catch (error) {
+          console.error("Failed to parse message:", error);
+          return;
+        }
+        if (parsedData.type === "motion") {
+          props.onSetMotion(parsedData.data);
+        }
       };
 
       ws.current.onopen = () => {

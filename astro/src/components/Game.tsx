@@ -7,6 +7,7 @@ const isDEV = import.meta.env.DEV;
 interface GameProps {
     cursorPos: { x: number; y: number };
     mask: { base64: string } | null;
+    onSetMotion: (motion: boolean) => void;
 }
 
 export interface CursorPosMsg {
@@ -17,6 +18,11 @@ export interface CursorPosMsg {
 export interface MaskMsg {
     type: "mask";
     data: GameProps["mask"];
+}
+
+export interface MotionMsg {
+    type: "motion";
+    data: boolean;
 }
 
 export default function Game(props: GameProps) {
@@ -46,10 +52,24 @@ export default function Game(props: GameProps) {
         }
     }, [maskMsg]);
 
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            if (event.origin !== location.origin) return;
+            const { type, data } = event.data;
+    
+            if (type === "motion") {
+                props.onSetMotion(data);
+            }
+        };
+    
+        window.addEventListener("message", handleMessage);
+        return () => window.removeEventListener("message", handleMessage);
+    }, []);
+
     return (
         <div>
             {!isDEV &&<iframe ref={frameRef} title="game" src="./game/index.html" width="1300" height="780" />}
-            {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} />}
+            {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} onSetMotion={props.onSetMotion} />}
         </div>
     );
 }
