@@ -20,7 +20,10 @@ MonoBehaviour:
   LithuaniaFlag: {fileID: 2100000, guid: de6257e33ac121849a0dec9e3df43f1e, type: 2}
   levelsAmbienceMusic: {fileID: 8300000, guid: cdfab68e200464842847522ffb19ae13, type: 3}
   levelsNonDiegeticMusic: {fileID: 0}
-  gameAmbienceMusic: {fileID: 8300000, guid: cdfab68e200464842847522ffb19ae13, type: 3}
+  EstoniaBackground: {fileID: 2100000, guid: 33e5bf41671f1454b83568fe97642a56, type: 2}
+  LatviaBackground: {fileID: 2100000, guid: 08da9825377f5c942bec33d03af10517, type: 2}
+  LithuaniaBackground: {fileID: 2100000, guid: 97d5f0f7c12d3c847a2427a8759af232, type: 2}
+  gameAmbienceMusic: {fileID: 8300000, guid: b16c4e15a2c39cc4ab3d161f2fe53199, type: 3}
   gameNonDiegeticMusic: {fileID: 0}
   buttonVFX: {fileID: 1059396251222821467, guid: 6f40d476b685ff04cab7f26744984544, type: 3}
   buttonSFX: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}

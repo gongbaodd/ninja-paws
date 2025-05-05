@@ -16,6 +16,9 @@ public class GameSettings : ScriptableObject
     public AudioClip levelsNonDiegeticMusic;
 
     [Header("game scene")]
+    public Material EstoniaBackground;
+    public Material LatviaBackground;
+    public Material LithuaniaBackground;
     public AudioClip gameAmbienceMusic;
     public AudioClip gameNonDiegeticMusic;
     public GameObject buttonVFX;
