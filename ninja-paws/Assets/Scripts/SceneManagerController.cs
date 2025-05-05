@@ -3,8 +3,6 @@ using UnityEditor;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System;
 using System.Threading.Tasks;
 
 
