@@ -5,13 +5,19 @@ public class GameSettings : ScriptableObject
 {
     [Header("start scene")]
     public bool useMotion = false;
+    public AudioClip startAmbienceMusic;
+    public AudioClip startNonDiegeticMusic;
 
     [Header("levels scene")]
     public Material EstoniaFlag;
     public Material LatviaFlag;
     public Material LithuaniaFlag;
+    public AudioClip levelsAmbienceMusic;
+    public AudioClip levelsNonDiegeticMusic;
 
     [Header("game scene")]
+    public AudioClip gameAmbienceMusic;
+    public AudioClip gameNonDiegeticMusic;
     public GameObject buttonVFX;
     public AudioClip buttonSFX;
     public AudioClip spawnSFX;
@@ -32,6 +38,12 @@ public class GameSettings : ScriptableObject
     public float timeInSeconds = 60f;
     public float showCountDownTime = 5f;
     public int ingredientsPoolSize = 50;
+    [Header("game ending")]
+    public AudioClip endingAmbienceMusic;
+    public AudioClip endingNonDiegeticMusic;
+    public AudioClip winningSFX;
+    public AudioClip losingSFX;
+
     [Header("all")]
     public float vfxTime = 0.6f;
 
