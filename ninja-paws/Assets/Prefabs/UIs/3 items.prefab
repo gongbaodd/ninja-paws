@@ -86,6 +86,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2408420174212597661}
     m_Modifications:
+    - target: {fileID: 3336519907897390036, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 286398d83cbce504db64a1f66e8aec84, type: 3}
     - target: {fileID: 4534011712932979965, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -170,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: item
       objectReference: {fileID: 0}
+    - target: {fileID: 5081741759631946212, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -188,6 +196,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2408420174212597661}
     m_Modifications:
+    - target: {fileID: 3336519907897390036, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 01737e08fe86cdb4ebe3e76213b57346, type: 3}
     - target: {fileID: 4534011712932979965, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -272,6 +284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: item (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5081741759631946212, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -290,6 +306,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2408420174212597661}
     m_Modifications:
+    - target: {fileID: 3336519907897390036, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 71f5848d408732d49a818f93afa5adef, type: 3}
     - target: {fileID: 4534011712932979965, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -373,6 +393,10 @@ PrefabInstance:
     - target: {fileID: 4705924744920538729, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
       propertyPath: m_Name
       value: item (0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081741759631946212, guid: b1b7b8c6da846044aae2c33a42e07aa7, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
