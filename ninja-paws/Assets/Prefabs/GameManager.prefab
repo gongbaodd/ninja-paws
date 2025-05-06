@@ -72,8 +72,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CatPaw: {fileID: 396324394177632256}
   minPointDistance: 0.1
-  drawingSpeedThresholdMotion: 5
-  drawingSpeedThresholdCursor: 2000
+  drawingSpeedThresholdMotion: 50
+  drawingSpeedThresholdCursor: 3000
+  motionMask: {fileID: 1761933743564834295}
 --- !u!114 &5097182854442295867
 MonoBehaviour:
   m_ObjectHideFlags: 0

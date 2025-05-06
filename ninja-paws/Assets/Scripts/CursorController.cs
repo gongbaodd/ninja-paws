@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class CursorController : MonoBehaviour
     private bool isDrawing = false;
     [SerializeField] float drawingSpeedThresholdMotion = 5f;
     [SerializeField] float drawingSpeedThresholdCursor = 2000f;
+    [SerializeField] GameObject motionMask;
     private Vector3 lastMousePosition;
     private float mouseSpeed;
 
@@ -41,8 +43,13 @@ public class CursorController : MonoBehaviour
 
     private void StopDrawing()
     {
-        isDrawing = false;
-        lineRenderer.enabled = false;
+        IEnumerator StopDrawingRoutine() {
+            yield return new WaitForSeconds(config.vfxTime);
+            isDrawing = false;
+            lineRenderer.enabled = false;
+        }
+
+        StartCoroutine(StopDrawingRoutine());
     }
 
     private void AddPoint(Vector3 point)
@@ -89,6 +96,16 @@ public class CursorController : MonoBehaviour
         CatPaw.transform.position = GetPawWorldPosition();
     }
 
+    void ActivateMask() 
+    {
+        motionMask.SetActive(true);
+    }
+
+    void DeactivateMask() 
+    {
+        motionMask.SetActive(false);
+    }
+
     void Start()
     {
         manager = GameManagerController.Instance;
@@ -96,12 +113,21 @@ public class CursorController : MonoBehaviour
 
         lineRenderer = GetComponent<LineRenderer>();
         LockMouse();
+
+        MotionButtonController.OnMotion += ActivateMask;
+        MotionButtonController.OnCursor += DeactivateMask;
     }
+
+    public static float MouseSpeed = 0f;
+    public static float drawingSpeedThresholdMotionStatic = 0f;
 
     void Update()
     {
         Vector3 currentMousePosition = MotionButtonController.isMotion ? HandTrackingReceiver.DesiredCurPosition : Input.mousePosition;
         mouseSpeed = (currentMousePosition - lastMousePosition).magnitude / Time.unscaledDeltaTime;
+        
+        MouseSpeed = mouseSpeed;
+        drawingSpeedThresholdMotionStatic = drawingSpeedThresholdMotion;
 
         lastMousePosition = currentMousePosition;
 
@@ -140,6 +166,8 @@ public class CursorController : MonoBehaviour
     void OnDestroy()
     {
         UnlockMouse();
+        MotionButtonController.OnMotion -= ActivateMask;
+        MotionButtonController.OnCursor -= DeactivateMask;
     }
 
 }

@@ -279,7 +279,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &196907409
 Canvas:
   m_ObjectHideFlags: 0
@@ -289,8 +289,8 @@ Canvas:
   m_GameObject: {fileID: 196907406}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 2
+  m_Camera: {fileID: 760989661}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -311,8 +311,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196907406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalScale: {x: 0.013888889, y: 0.013888889, z: 0.013888889}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1953209494}
@@ -320,9 +320,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 1280, y: 720}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &315164002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,6 +1269,7 @@ MonoBehaviour:
   loading: {fileID: 1904277437}
   useMotionSprite: {fileID: 842393476}
   useCursorSpriite: {fileID: 1205360083}
+  content: {fileID: 315164004}
 --- !u!1 &1205360083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,10 +1775,6 @@ PrefabInstance:
     - target: {fileID: 1715177953693793515, guid: 3f0c276425c6cf2449b6ad3e3382b3b5, type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6759017828133097184, guid: 3f0c276425c6cf2449b6ad3e3382b3b5, type: 3}
-      propertyPath: drawingSpeedThresholdCursor
-      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 7004553388188439859, guid: 3f0c276425c6cf2449b6ad3e3382b3b5, type: 3}
       propertyPath: m_LocalPosition.x

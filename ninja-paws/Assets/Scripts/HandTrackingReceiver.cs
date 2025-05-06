@@ -129,8 +129,12 @@ public class HandTrackingReceiver : MonoBehaviour
     {
         if (manager.useMotion)
         {
+#if UNITY_EDITOR
             DesposeServer();
+#endif
+#if UNITY_WEBGL && !UNITY_EDITOR
             StopMotionTracking();
+#endif
             DesiredCurPosition = Vector3.zero;
         }
         else
@@ -223,8 +227,9 @@ public class HandTrackingReceiver : MonoBehaviour
             Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, Camera.main.nearClipPlane);
             Vector3 targetWorldPos = Camera.main.ScreenToWorldPoint(screenPoint);
             targetWorldPos.z = desiredZ;
-            // float lerpT = Time.deltaTime / smoothingFactor;
-            DesiredCurPosition = targetWorldPos;
+            float lerpT = Time.deltaTime / smoothingFactor;
+            DesiredCurPosition = Vector3.Lerp(DesiredCurPosition, targetWorldPos, lerpT);
+            // DesiredCurPosition = targetWorldPos;
         }
     }
 

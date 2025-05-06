@@ -92,6 +92,8 @@ public class ButtonController : MonoBehaviour
         {
             var cursor = manager.GetComponent<CursorController>();
 
+            print("Is drawing: " + CursorController.MouseSpeed + " " + cursor.IsDrawing + " " + CursorController.drawingSpeedThresholdMotionStatic);
+
             if (cursor.IsDrawing)
             {
                 Poof();
