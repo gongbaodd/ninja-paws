@@ -136,6 +136,7 @@ public class HandTrackingReceiver : MonoBehaviour
         InitializeIframeListener();
 
         targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
     }
 
     void Awake()
@@ -211,19 +212,19 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void OnDestroy()
     {
-        var useMotion = config.useMotion;
-        if (!useMotion) return;
+        // var useMotion = config.useMotion;
+        // if (!useMotion) return;
         
-        // Unsubscribe
-        HandTrackingBehavior.OnDataReceived -= HandleMessage;
+        // // Unsubscribe
+        // HandTrackingBehavior.OnDataReceived -= HandleMessage;
 
-        // Stop the server when the object is destroyed or game stops
-        if (wsServer != null && wsServer.IsListening)
-        {
-            Debug.Log("Stopping WebSocket Server...");
-            wsServer.Stop();
-            wsServer = null; // Allow garbage collection
-        }
-        Debug.Log("HandTrackingReceiver destroyed.");
+        // // Stop the server when the object is destroyed or game stops
+        // if (wsServer != null && wsServer.IsListening)
+        // {
+        //     Debug.Log("Stopping WebSocket Server...");
+        //     wsServer.Stop();
+        //     wsServer = null; // Allow garbage collection
+        // }
+        // Debug.Log("HandTrackingReceiver destroyed.");
     }
 }

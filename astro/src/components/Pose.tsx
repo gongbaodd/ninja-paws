@@ -76,6 +76,11 @@ export default function PoseDetection() {
     pose.onResults((result) => {
       canvasCtx.save();
       canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+      // Mirror horizontally
+      canvasCtx.scale(-1, 1);
+      canvasCtx.translate(-canvasElement.width, 0);
+
       canvasCtx.drawImage(
         result.segmentationMask,
         0,
@@ -108,7 +113,7 @@ export default function PoseDetection() {
       const rightWrist = results.poseLandmarks[RIGHT_WRIST_INDEX];
 
       if (rightWrist) {
-        const x = rightWrist.x;
+        const x = 1 - rightWrist.x;
         const y = rightWrist.y;
         onCursor(x, y);
       }

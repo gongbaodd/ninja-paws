@@ -4,6 +4,7 @@
     video {
         width: 1280px;
         height: 720px;
+        transform: scaleX(-1);
     }
 
     canvas {
