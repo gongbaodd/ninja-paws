@@ -64,14 +64,15 @@ public class HandTrackingReceiver : MonoBehaviour
 
     readonly float desiredZ = 0;
 
-    bool useMotion = false;
-
     [DllImport("__Internal")]
     private static extern void SetUpDataListener(string gameObjectName);
     [DllImport("__Internal")]
     private static extern void StartMotionTracking();
     [DllImport("__Internal")]
     private static extern void StopMotionTracking();
+
+    GameManagerController manager;
+    GameSettings config;
 
     struct MotionEvent {
         public string type;
@@ -127,7 +128,8 @@ public class HandTrackingReceiver : MonoBehaviour
     private Texture2D previousTexture = null;
 
     public void InitService() {
-        useMotion = true;
+
+        config.useMotion = true;
 
         InitializeWebsocketServer();
 
@@ -144,14 +146,13 @@ public class HandTrackingReceiver : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        if (mainCamera == null)
-        {
-            Debug.LogError("Could not find Main Camera in the scene. Please ensure a camera is tagged 'MainCamera'.", this);
-        }
+        manager = GameManagerController.Instance;
+        config = manager.config;
     }
 
     void Update()
     {
+        var useMotion = config.useMotion;
         if (!useMotion) return;
 
         while (messageQueue.TryDequeue(out string posStr))
@@ -184,7 +185,7 @@ public class HandTrackingReceiver : MonoBehaviour
                             Destroy(previousTexture);
                         }
 
-                        mask.material.shader = Shader.Find("Unlit/Transparent");
+                        mask.material.shader = Shader.Find("UI/Unlit/Transparent");
                         previousTexture = texture;
                         mask.material.mainTexture = texture;
                     }
@@ -210,6 +211,7 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void OnDestroy()
     {
+        var useMotion = config.useMotion;
         if (!useMotion) return;
         
         // Unsubscribe

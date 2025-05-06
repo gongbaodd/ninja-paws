@@ -7,6 +7,8 @@ using UnityEngine;
 )]
 public class CursorController : MonoBehaviour
 {
+    GameManagerController manager;
+    GameSettings config;
     [SerializeField] GameObject CatPaw;
     [SerializeField] float minPointDistance = 0.1f;
     readonly float mousePosZ = 0f;
@@ -79,12 +81,17 @@ public class CursorController : MonoBehaviour
 
     void Start()
     {
+        manager = GameManagerController.Instance;
+        config = manager.config;
+
         lineRenderer = GetComponent<LineRenderer>();
         LockMouse();
     }
 
     void Update()
     {
+        if (config.useMotion) return;
+        
         Vector3 currentMousePosition = Input.mousePosition;
         mouseSpeed = (currentMousePosition - lastMousePosition).magnitude / Time.unscaledDeltaTime;
         lastMousePosition = currentMousePosition;
