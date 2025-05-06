@@ -90,7 +90,7 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        if (config.useMotion) return;
+        if (MotionButtonController.isMotion) return;
         
         Vector3 currentMousePosition = Input.mousePosition;
         mouseSpeed = (currentMousePosition - lastMousePosition).magnitude / Time.unscaledDeltaTime;

@@ -24,11 +24,6 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
-    void InitPlayerSettings() {
-        bool playerUseMotion = PlayerPrefs.GetInt("UseMotion") == 1;
-        config.useMotion = playerUseMotion;
-    }
-
     void CollectIngredients() {
         var dishes = config.dishes;
         foreach (var dish in dishes) {
@@ -97,8 +92,6 @@ public class GameManagerController : MonoBehaviour
 
     void Start()
     {
-        InitPlayerSettings();
-
         TimerController.OnTimeout += OnGameEnd;
         IndicatorController.OnIndicatorStateUpdate += OnIndicatorStateUpdate;
     }

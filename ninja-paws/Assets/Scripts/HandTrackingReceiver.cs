@@ -125,16 +125,37 @@ public class HandTrackingReceiver : MonoBehaviour
 
     private Texture2D previousTexture = null;
 
-    public void InitService() {
+    public void ToggleService()
+    {
+        if (config.useMotion)
+        {
+            DesposeServer();
+        }
+        else
+        {
+            InitializeWebsocketServer();
+            InitializeIframeListener();
+            targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        }
 
-        config.useMotion = true;
+    }
 
-        InitializeWebsocketServer();
+    public static bool isReceivingData = false;
 
-        InitializeIframeListener();
+    void DesposeServer()
+    {
+        // Unsubscribe
+        HandTrackingBehavior.OnDataReceived -= HandleMessage;
 
-        targetScreenPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
-
+        // Stop the server when the object is destroyed or game stops
+        if (wsServer != null && wsServer.IsListening)
+        {
+            Debug.Log("Stopping WebSocket Server...");
+            wsServer.Stop();
+            wsServer = null; // Allow garbage collection
+            isReceivingData = false;
+        }
+        Debug.Log("HandTrackingReceiver destroyed.");
     }
 
     void Start()
@@ -146,14 +167,15 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void Update()
     {
-        var useMotion = config.useMotion;
-        if (!useMotion) return;
+        if (!config.useMotion) return;
 
         while (messageQueue.TryDequeue(out string posStr))
         {
             try
             {
                 MessageData receivedData = JsonUtility.FromJson<MessageData>(posStr);
+
+                isReceivingData = true;
 
                 if (receivedData.type == "cursorPos")
                 {
@@ -193,7 +215,7 @@ public class HandTrackingReceiver : MonoBehaviour
         }
 
 
-        if (virtualCursor != null)
+        if (virtualCursor != null && MotionButtonController.isMotion)
         {
             Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, Camera.main.nearClipPlane);
             Vector3 targetWorldPos = Camera.main.ScreenToWorldPoint(screenPoint);
@@ -205,16 +227,6 @@ public class HandTrackingReceiver : MonoBehaviour
 
     void OnDestroy()
     {   
-        // Unsubscribe
-        HandTrackingBehavior.OnDataReceived -= HandleMessage;
-
-        // Stop the server when the object is destroyed or game stops
-        if (wsServer != null && wsServer.IsListening)
-        {
-            Debug.Log("Stopping WebSocket Server...");
-            wsServer.Stop();
-            wsServer = null; // Allow garbage collection
-        }
-        Debug.Log("HandTrackingReceiver destroyed.");
+        DesposeServer();
     }
 }
