@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041d811c7c06470448c82029f033d9de, type: 3}
   m_Name: Estonian Beetroot Salad
   m_EditorClassIdentifier: 
-  itemName: Estonian Beetroot Salad
+  itemName: Beetroot Salad
   sprite: {fileID: 0}
   ingredients:
   - {fileID: 11400000, guid: 60e92446af2e35f4493bd5b9c3999832, type: 2}
