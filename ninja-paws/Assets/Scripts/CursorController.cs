@@ -15,7 +15,8 @@ public class CursorController : MonoBehaviour
     private LineRenderer lineRenderer;
     private List<Vector3> points = new();
     private bool isDrawing = false;
-    [SerializeField] float drawingSpeedThreshold = 50f;
+    [SerializeField] float drawingSpeedThresholdMotion = 5f;
+    [SerializeField] float drawingSpeedThresholdCursor = 2000f;
     private Vector3 lastMousePosition;
     private float mouseSpeed;
 
@@ -104,18 +105,33 @@ public class CursorController : MonoBehaviour
 
         lastMousePosition = currentMousePosition;
 
-        if (!isDrawing && mouseSpeed > drawingSpeedThreshold)
+        if (!isDrawing)
         {
-            StartDrawing();
+            if (MotionButtonController.isMotion && mouseSpeed > drawingSpeedThresholdMotion)
+            { 
+                StartDrawing();
+            } else {
+                if (mouseSpeed > drawingSpeedThresholdCursor)
+                {
+                    StartDrawing();
+                }
+            }
         }
-        else if (isDrawing && mouseSpeed < drawingSpeedThreshold * 0.5f)
-        {
-            StopDrawing();
-        }
-
+        
         if (isDrawing)
         {
+            if (MotionButtonController.isMotion && mouseSpeed < drawingSpeedThresholdMotion * 0.5f)
+            { 
+                StopDrawing();
+            } else {
+                if (mouseSpeed < drawingSpeedThresholdCursor * 0.5f)
+                {
+                    StopDrawing();
+                }
+            }
+
             ContinueDrawing();
+
         }
 
         UpdateCatPawPos();

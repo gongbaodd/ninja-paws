@@ -74,6 +74,20 @@ public class SceneManagerController : MonoBehaviour
         manager.PlayAmbience(config.endingNonDiegeticMusic);
     }
 
+    [SerializeField] AssetReference introScene;
+    public async Task GotoIntroScene()
+    {
+        await LoadSceneAsync(introScene);
+        PlayStartSceneMusic();
+    }
+
+    [SerializeField] AssetReference winScene;
+    public async Task GotoWinScene()
+    {
+        await LoadSceneAsync(winScene);
+        PlayStartSceneMusic();
+    }
+
     public void ReloadGameScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -22,6 +22,11 @@ public class ButtonController : MonoBehaviour
     {
         manager.GetComponent<SceneManagerController>().BeforeLoadScene();
     }
+
+    public void GotoIntroScene()
+    {
+        _ = manager.GetComponent<SceneManagerController>().GotoIntroScene();
+    }
     public void GotoLevelsScene()
     {
         _ = manager.GetComponent<SceneManagerController>().GotoLevelMenuScene();
@@ -37,9 +42,9 @@ public class ButtonController : MonoBehaviour
         _ = manager.GetComponent<SceneManagerController>().GotoGameScene();
     }
 
-    public void ReloadScene()
+    public void GotoWinScene()
     {
-        manager.GetComponent<SceneManagerController>().ReloadGameScene();
+        _ = manager.GetComponent<SceneManagerController>().GotoWinScene();
     }
 
     public void PlayVFX()
