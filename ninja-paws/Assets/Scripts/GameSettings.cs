@@ -4,7 +4,6 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     [Header("start scene")]
-    public bool useMotion = false;
     public AudioClip startAmbienceMusic;
     public AudioClip startNonDiegeticMusic;
 

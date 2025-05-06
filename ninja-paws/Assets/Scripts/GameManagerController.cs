@@ -7,11 +7,11 @@ using UnityEngine;
 public class GameManagerController : MonoBehaviour
 {
     public static GameManagerController Instance { get { return instance; } }
-    
     static GameManagerController instance;
     public GameSettings config;
     public List<IngredientConfig> ingredients = new();
     public int dishIndex = 0;
+    public bool useMotion = false;
     public IngredientConfig[] WantedIngredients {
         get {
             return config.dishes[dishIndex].ingredients;

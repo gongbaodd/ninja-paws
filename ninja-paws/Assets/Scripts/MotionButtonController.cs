@@ -11,16 +11,16 @@ public class MotionButtonController : MonoBehaviour
     public static bool isMotion = false;
 
     void RenderSprite() {
-        useMotionSprite.SetActive(!config.useMotion);
-        useCursorSpriite.SetActive(config.useMotion);
+        useMotionSprite.SetActive(!manager.useMotion);
+        useCursorSpriite.SetActive(manager.useMotion);
     }
 
     public void OnToggleButtonClicked() {
-        if (config.useMotion) {
-            config.useMotion = false;
+        if (manager.useMotion) {
+            manager.useMotion = false;
             loading.SetActive(false);
         } else {
-            config.useMotion = true;
+            manager.useMotion = true;
             loading.SetActive(true);
 
         }

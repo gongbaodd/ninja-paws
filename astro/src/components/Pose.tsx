@@ -7,7 +7,7 @@ import Game from "./Game";
 
 const { Pose } = PosePkg;
 const { Camera } = CameraPkg;
-const RIGHT_WRIST_INDEX = 16;
+const HAND_INDEX = 20;
 const isDEV = import.meta.env.DEV;
 
 export default function PoseDetection() {
@@ -110,7 +110,7 @@ export default function PoseDetection() {
     camera.start();
 
     function getRightWristPos(results: PosePkg.Results) {
-      const rightWrist = results.poseLandmarks[RIGHT_WRIST_INDEX];
+      const rightWrist = results.poseLandmarks[HAND_INDEX];
 
       if (rightWrist) {
         const x = 1 - rightWrist.x;

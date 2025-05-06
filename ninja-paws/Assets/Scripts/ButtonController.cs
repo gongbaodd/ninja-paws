@@ -67,13 +67,19 @@ public class ButtonController : MonoBehaviour
     {
         var sceneController = manager.GetComponent<SceneManagerController>();
         if (sceneController.isLoading) return;
-
         if (!isSlicable) return;
+
+        IEnumerator DisableRoutine() {
+            yield return new WaitForSeconds(config.vfxTime * 2);
+            SetSlicable(true);
+        }
 
         PlayVFX();
         PlaySFX();
 
         onSlice.Invoke();
+        SetSlicable(false);
+        StartCoroutine(DisableRoutine());
     }
     void OnTriggerEnter(Collider other)
     {

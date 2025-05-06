@@ -124,12 +124,14 @@ public class HandTrackingReceiver : MonoBehaviour
     }
 
     private Texture2D previousTexture = null;
-
+    public static Vector3 DesiredCurPosition { get; private set; }
     public void ToggleService()
     {
-        if (config.useMotion)
+        if (manager.useMotion)
         {
             DesposeServer();
+            StopMotionTracking();
+            DesiredCurPosition = Vector3.zero;
         }
         else
         {
@@ -165,9 +167,10 @@ public class HandTrackingReceiver : MonoBehaviour
         config = manager.config;
     }
 
+
     void Update()
     {
-        if (!config.useMotion) return;
+        if (!manager.useMotion) return;
 
         while (messageQueue.TryDequeue(out string posStr))
         {
@@ -220,8 +223,8 @@ public class HandTrackingReceiver : MonoBehaviour
             Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, Camera.main.nearClipPlane);
             Vector3 targetWorldPos = Camera.main.ScreenToWorldPoint(screenPoint);
             targetWorldPos.z = desiredZ;
-            float lerpT = Time.deltaTime / smoothingFactor;
-            virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
+            // float lerpT = Time.deltaTime / smoothingFactor;
+            DesiredCurPosition = targetWorldPos;
         }
     }
 

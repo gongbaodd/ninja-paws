@@ -15,7 +15,7 @@ public class CursorController : MonoBehaviour
     private LineRenderer lineRenderer;
     private List<Vector3> points = new();
     private bool isDrawing = false;
-    [SerializeField] float drawingSpeedThreshold = 50f; 
+    [SerializeField] float drawingSpeedThreshold = 50f;
     private Vector3 lastMousePosition;
     private float mouseSpeed;
 
@@ -26,12 +26,12 @@ public class CursorController : MonoBehaviour
         lineRenderer.enabled = true;
         isDrawing = true;
         points.Clear();
-        AddPoint(GetMouseWorldPosition());
+        AddPoint(GetPawWorldPosition());
     }
 
     private void ContinueDrawing()
     {
-        Vector3 newPos = GetMouseWorldPosition();
+        Vector3 newPos = GetPawWorldPosition();
         if (points.Count == 0 || Vector3.Distance(points[points.Count - 1], newPos) > minPointDistance)
         {
             AddPoint(newPos);
@@ -51,14 +51,23 @@ public class CursorController : MonoBehaviour
         lineRenderer.SetPositions(points.ToArray());
     }
 
-    private Vector3 GetMouseWorldPosition()
+    private Vector3 GetPawWorldPosition()
     {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = mousePosZ;
+        if (MotionButtonController.isMotion)
+        {
+            var curPos = HandTrackingReceiver.DesiredCurPosition;
+            return new Vector3(curPos.x, curPos.y, mousePosZ);
+        }
+        else
+        {
 
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPos.z = mousePosZ;
-        return worldPos;
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = mousePosZ;
+
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            worldPos.z = mousePosZ;
+            return worldPos;
+        }
     }
 
     private void LockMouse()
@@ -76,7 +85,7 @@ public class CursorController : MonoBehaviour
 
     private void UpdateCatPawPos()
     {
-        CatPaw.transform.position = GetMouseWorldPosition();
+        CatPaw.transform.position = GetPawWorldPosition();
     }
 
     void Start()
@@ -90,10 +99,9 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        if (MotionButtonController.isMotion) return;
-        
-        Vector3 currentMousePosition = Input.mousePosition;
+        Vector3 currentMousePosition = MotionButtonController.isMotion ? HandTrackingReceiver.DesiredCurPosition : Input.mousePosition;
         mouseSpeed = (currentMousePosition - lastMousePosition).magnitude / Time.unscaledDeltaTime;
+
         lastMousePosition = currentMousePosition;
 
         if (!isDrawing && mouseSpeed > drawingSpeedThreshold)
