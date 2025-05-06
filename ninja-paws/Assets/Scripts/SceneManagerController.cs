@@ -20,7 +20,7 @@ public class SceneManagerController : MonoBehaviour
         isLoading = true;
     }
 
-    async Task LoadSceneAsync(AssetReference scene)
+    async Task LoadSceneAsync(AssetReference scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         if (loadHandler.IsValid())
         {
@@ -28,7 +28,7 @@ public class SceneManagerController : MonoBehaviour
             await unLoadHandle.Task;
         }
 
-        loadHandler = scene.LoadSceneAsync(LoadSceneMode.Single, true);
+        loadHandler = scene.LoadSceneAsync(mode, true);
         await loadHandler.Task;
 
         loading.SetActive(false);
@@ -74,9 +74,9 @@ public class SceneManagerController : MonoBehaviour
         manager.PlayAmbience(config.endingNonDiegeticMusic);
     }
 
-    public void ReloadScene()
+    public void ReloadGameScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Awake()

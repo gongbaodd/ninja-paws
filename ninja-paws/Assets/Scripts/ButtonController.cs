@@ -39,7 +39,7 @@ public class ButtonController : MonoBehaviour
 
     public void ReloadScene()
     {
-        manager.GetComponent<SceneManagerController>().ReloadScene();
+        manager.GetComponent<SceneManagerController>().ReloadGameScene();
     }
 
     public void PlayVFX()

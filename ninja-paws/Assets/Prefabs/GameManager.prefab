@@ -55,6 +55,7 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 70222ec3682b3334f89e3c7adeb7b62f, type: 2}
   ingredients: []
   dishIndex: 0
+  useMotion: 0
   bgm: {fileID: 6790827734732212246}
   KeepSpawnIngredients: 0
 --- !u!114 &6759017828133097184
@@ -174,8 +175,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.48752844
-        value: 0
+        time: 0.48307288
+        value: 0.14706421
         inSlope: 0.27580026
         outSlope: 0.27580026
         tangentMode: 0
