@@ -91,13 +91,14 @@ public class GameManagerController : MonoBehaviour
             DontDestroyOnLoad(instance);
         }
 
-        InitPlayerSettings();
         CollectIngredients();
         sfx = GetComponent<AudioSource>();
     }
 
     void Start()
     {
+        InitPlayerSettings();
+
         TimerController.OnTimeout += OnGameEnd;
         IndicatorController.OnIndicatorStateUpdate += OnIndicatorStateUpdate;
     }

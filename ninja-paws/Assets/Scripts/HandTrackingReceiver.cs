@@ -60,8 +60,6 @@ public class HandTrackingReceiver : MonoBehaviour
     WebSocketServer wsServer;
     readonly ConcurrentQueue<string> messageQueue = new(); 
     Vector2 targetScreenPos; 
-    Camera mainCamera; 
-
     readonly float desiredZ = 0;
 
     [DllImport("__Internal")]
@@ -139,14 +137,9 @@ public class HandTrackingReceiver : MonoBehaviour
 
     }
 
-    void Awake()
-    {
-        virtualCursor = gameObject;
-    }
-
     void Start()
     {
-        mainCamera = Camera.main;
+        virtualCursor = gameObject;
         manager = GameManagerController.Instance;
         config = manager.config;
     }
@@ -200,10 +193,10 @@ public class HandTrackingReceiver : MonoBehaviour
         }
 
 
-        if (virtualCursor != null && mainCamera != null)
+        if (virtualCursor != null)
         {
-            Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, mainCamera.nearClipPlane);
-            Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(screenPoint);
+            Vector3 screenPoint = new(targetScreenPos.x, targetScreenPos.y, Camera.main.nearClipPlane);
+            Vector3 targetWorldPos = Camera.main.ScreenToWorldPoint(screenPoint);
             targetWorldPos.z = desiredZ;
             float lerpT = Time.deltaTime / smoothingFactor;
             virtualCursor.transform.position = Vector3.Lerp(virtualCursor.transform.position, targetWorldPos, lerpT);
@@ -211,20 +204,17 @@ public class HandTrackingReceiver : MonoBehaviour
     }
 
     void OnDestroy()
-    {
-        // var useMotion = config.useMotion;
-        // if (!useMotion) return;
-        
-        // // Unsubscribe
-        // HandTrackingBehavior.OnDataReceived -= HandleMessage;
+    {   
+        // Unsubscribe
+        HandTrackingBehavior.OnDataReceived -= HandleMessage;
 
-        // // Stop the server when the object is destroyed or game stops
-        // if (wsServer != null && wsServer.IsListening)
-        // {
-        //     Debug.Log("Stopping WebSocket Server...");
-        //     wsServer.Stop();
-        //     wsServer = null; // Allow garbage collection
-        // }
-        // Debug.Log("HandTrackingReceiver destroyed.");
+        // Stop the server when the object is destroyed or game stops
+        if (wsServer != null && wsServer.IsListening)
+        {
+            Debug.Log("Stopping WebSocket Server...");
+            wsServer.Stop();
+            wsServer = null; // Allow garbage collection
+        }
+        Debug.Log("HandTrackingReceiver destroyed.");
     }
 }
