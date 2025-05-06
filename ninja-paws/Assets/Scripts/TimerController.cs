@@ -18,6 +18,8 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
+        if (!manager.KeepSpawnIngredients) return;
+
         if (timeLeft < 0) return;
 
         timeLeft -= Time.deltaTime;
