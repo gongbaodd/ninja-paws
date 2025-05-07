@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import WebSocketComponent from "./WebSocket";
 const isDEV = import.meta.env.DEV;
+console.log(import.meta.env)
 
 interface GameProps {
     cursorPos: { x: number; y: number };
@@ -67,9 +68,15 @@ export default function Game(props: GameProps) {
         return () => window.removeEventListener("message", handleMessage);
     }, []);
 
+    const Game = () => {
+        return (
+            <iframe ref={frameRef} title="game" src="./game/index.html" width="1280" height="720" />
+        );
+    }
+
     return (
         <div className="game">
-            {<iframe ref={frameRef} title="game" src="./game/index.html" width="1280" height="720" />}
+            <Game />
             {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} onSetMotion={props.onSetMotion} />}
         </div>
     );
