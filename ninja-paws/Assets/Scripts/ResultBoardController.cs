@@ -1,12 +1,16 @@
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ResultBoardController : MonoBehaviour
 {
     [SerializeField] TMP_Text redoLabel;
     [SerializeField] GameObject Items;
     [SerializeField] GameObject NextButton;
+    [SerializeField] TMP_Text ManagerComment;
     GameManagerController manager;
+    GameSettings config;
     IndicatorController.State gameState;
     void RenderItems()
     {
@@ -41,6 +45,55 @@ public class ResultBoardController : MonoBehaviour
 
     }
 
+    async Task<string> GetManagerComment()
+    {
+        var dishConfig = config.dishes[manager.dishIndex];
+        var name = dishConfig.itemName.Replace(" ", "_");
+        var url = $"https://ninja-paws-server.solitary-forest-8d89.workers.dev/review/{name}?finishedCount={gameState.finishedCount}&ruinedCount={gameState.redoCount}";
+
+        try
+        {
+            foreach (var item in gameState.checkItems)
+            {
+                if (item.count > 0)
+                {
+                    url += $"&{item.itemName}={item.count}";
+                }
+            }
+        }
+        catch
+        {
+            print("no game state");
+        }
+
+
+
+        using UnityWebRequest request = UnityWebRequest.Get(url);
+
+        var asyncOpteration = request.SendWebRequest();
+
+        while (!asyncOpteration.isDone)
+        {
+            await Task.Yield();
+        }
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            return request.downloadHandler.text;
+        }
+
+        return null;
+    }
+
+    async Task RenderComment()
+    {
+        string comment = await GetManagerComment();
+        if (comment != null)
+        {
+            ManagerComment.text = $"Manager: \n {comment}";
+        }
+    }
+
     public void GoNext()
     {
         var sceneManager = manager.GetComponent<SceneManagerController>();
@@ -55,14 +108,19 @@ public class ResultBoardController : MonoBehaviour
             }
 
             _ = sceneManager.GotoLevelMenuScene();
-        } else {
+        }
+        else
+        {
             _ = sceneManager.GotoWinScene();
         }
     }
-    void Start()
+    async void Start()
     {
         manager = GameManagerController.Instance;
+        config = manager.config;
         gameState = manager.gameState;
+
+        await RenderComment();
 
         redoLabel.text = $"{gameState.finishedCount} finished, {gameState.redoCount} ruined";
 
