@@ -9,9 +9,11 @@ public class DishController : MonoBehaviour
     [SerializeField] GameObject leftButton;
     [SerializeField] GameObject rightButton;
     [SerializeField] GameObject plate;
+    [SerializeField] GameObject lockObj;
+    [SerializeField] GameObject PlayButton;
 
-    int index = 0;
-    int length = 0;
+    public int index = 0;
+    public int length = 0;
 
     public void NextDish()
     {
@@ -28,12 +30,19 @@ public class DishController : MonoBehaviour
         manager.dishIndex = index;
     }
 
+    void Awake()
+    {
+        PlayButton.SetActive(false);
+    }
+
     void Start()
     {
         manager = GameManagerController.Instance;
         config = manager.config;
         dishes = config.dishes;
         length = dishes.Length;
+
+        index = manager.dishIndex;
     }
 
     void Update()
@@ -43,6 +52,8 @@ public class DishController : MonoBehaviour
 
         plate.GetComponent<PlateController>().dishConfig = dishes[index];
 
-
+        bool isLocked = index > manager.lastUnlockedDishIndex;
+        lockObj.SetActive(isLocked);
+        PlayButton.SetActive(!isLocked);
     }
 }

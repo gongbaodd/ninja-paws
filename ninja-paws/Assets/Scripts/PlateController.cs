@@ -8,7 +8,6 @@ public class PlateController : MonoBehaviour
     GameSettings config;
     public DishConfig dishConfig;
     [SerializeField] GameObject dishRenderer;
-    [SerializeField] GameObject flag;
     [SerializeField] TMP_Text label;
     [SerializeField] GameObject Items3;
     [SerializeField] GameObject Items4;
@@ -46,22 +45,6 @@ public class PlateController : MonoBehaviour
         }
     }
 
-    void UpdateFlag()
-    {
-        switch (dishConfig.country)
-        {
-            case DishConfig.Country.Estonia:
-                flag.GetComponent<Renderer>().material = config.EstoniaFlag;
-                break;
-            case DishConfig.Country.Latvia:
-                flag.GetComponent<Renderer>().material = config.LatviaFlag;
-                break;
-            case DishConfig.Country.Lithuania:
-                flag.GetComponent<Renderer>().material = config.LithuaniaFlag;
-                break;
-        }
-    }
-
     void Awake()
     {
         Items3.SetActive(false);
@@ -83,8 +66,6 @@ public class PlateController : MonoBehaviour
         {
             dishRenderer.GetComponent<SpriteRenderer>().sprite = dishConfig.sprite;
         }
-
-        UpdateFlag();
 
         label.text = dishConfig.itemName;
 

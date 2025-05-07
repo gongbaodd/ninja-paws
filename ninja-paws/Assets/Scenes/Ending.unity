@@ -202,7 +202,7 @@ PrefabInstance:
     - target: {fileID: 7738772558141569591, guid: 7702d560660f99e4ba1607923e8ac80c, type: 3}
       propertyPath: onSliced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 16992675}
+      objectReference: {fileID: 1797118334}
     - target: {fileID: 7738772558141569591, guid: 7702d560660f99e4ba1607923e8ac80c, type: 3}
       propertyPath: onSliced.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -229,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7738772558141569591, guid: 7702d560660f99e4ba1607923e8ac80c, type: 3}
       propertyPath: onSliced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotoLevelsScene
+      value: GoNext
       objectReference: {fileID: 0}
     - target: {fileID: 7738772558141569591, guid: 7702d560660f99e4ba1607923e8ac80c, type: 3}
       propertyPath: onSliced.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -245,7 +245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7738772558141569591, guid: 7702d560660f99e4ba1607923e8ac80c, type: 3}
       propertyPath: onSliced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ButtonController, Assembly-CSharp
+      value: ResultBoardController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7738772558141569591, guid: 7702d560660f99e4ba1607923e8ac80c, type: 3}
       propertyPath: onSliced.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName

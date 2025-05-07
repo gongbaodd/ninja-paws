@@ -40,6 +40,25 @@ public class ResultBoardController : MonoBehaviour
         }
 
     }
+
+    public void GoNext()
+    {
+        var sceneManager = manager.GetComponent<SceneManagerController>();
+        var currIndex = manager.dishIndex;
+        if (currIndex < manager.config.dishes.Length - 1)
+        {
+            manager.dishIndex = currIndex + 1;
+
+            if (gameState.finishedCount > 0 && manager.lastUnlockedDishIndex == currIndex)
+            {
+                manager.lastUnlockedDishIndex = currIndex + 1;
+            }
+
+            _ = sceneManager.GotoLevelMenuScene();
+        } else {
+            _ = sceneManager.GotoWinScene();
+        }
+    }
     void Start()
     {
         manager = GameManagerController.Instance;

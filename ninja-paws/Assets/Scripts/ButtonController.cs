@@ -70,7 +70,11 @@ public class ButtonController : MonoBehaviour
 
     void Poof()
     {
+
         var sceneController = manager.GetComponent<SceneManagerController>();
+        print("sceneManager" + sceneController.isLoading);
+        print("isSlicable" + isSlicable);   
+
         if (sceneController.isLoading) return;
         if (!isSlicable) return;
 
@@ -82,9 +86,9 @@ public class ButtonController : MonoBehaviour
         PlayVFX();
         PlaySFX();
 
-        onSlice.Invoke();
         SetSlicable(false);
         StartCoroutine(DisableRoutine());
+        onSlice.Invoke();
     }
     void OnTriggerEnter(Collider other)
     {
@@ -104,5 +108,10 @@ public class ButtonController : MonoBehaviour
         manager = GameManagerController.Instance;
         config = manager.config;
         sfx = GetComponent<AudioSource>();
+    }
+
+    void OnEnable()
+    {
+        SetSlicable(true);
     }
 }
