@@ -11,6 +11,7 @@ public class GameManagerController : MonoBehaviour
     public GameSettings config;
     public List<IngredientConfig> ingredients = new();
     public int dishIndex = 0;
+    public int lastUnlockedDishIndex = 0;
     public bool useMotion = false;
     public IngredientConfig[] WantedIngredients {
         get {

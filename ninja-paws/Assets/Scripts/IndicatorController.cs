@@ -15,6 +15,7 @@ public class IndicatorController : MonoBehaviour
     [SerializeField] GameObject Items3;
     [SerializeField] GameObject Items4;
     [SerializeField] GameObject Items5;
+    [SerializeField] GameObject plus1;
 
     public struct CheckItem {
         public string itemName;
@@ -22,9 +23,9 @@ public class IndicatorController : MonoBehaviour
         public int count;
     }
     readonly List<CheckItem> checkItems = new();
-    bool isCollectSfxPlayed = false;
     GameObject redoVFX;
     int redoCount = 0;
+    int finishedCount = 0;
     void InitItems()
     {
         Items3.SetActive(dish.ingredients.Length == 3);
@@ -62,8 +63,29 @@ public class IndicatorController : MonoBehaviour
     public struct State {
         public List<CheckItem> checkItems;
         public int redoCount;
+        public int finishedCount;
     }
     public static event System.Action<State> OnIndicatorStateUpdate;
+
+    void RemoveOneDish()
+    {
+        for (int i = 0; i < checkItems.Count; i++)
+        {
+            var checkItem = checkItems[i];
+
+            checkItem.count--;
+            if (checkItem.count < 0) {
+                checkItem.count = 0;
+            }
+
+            checkItem.isChecked = checkItem.count > 0;
+            checkItems[i] = checkItem;
+
+            var indicateItem = Items.transform.GetChild(i).gameObject;
+            var check = indicateItem.transform.Find("check").gameObject;
+            check.SetActive(checkItem.isChecked);
+        }
+    }
 
     void OnIngredientCaught(IngredientConfig itemConfig)
     {
@@ -83,13 +105,16 @@ public class IndicatorController : MonoBehaviour
 
             if (checkItems.TrueForAll(x => x.isChecked))
             {
-                if (isCollectSfxPlayed) return;
+                finishedCount++;
+                plus1.SetActive(true);
+                RemoveOneDish();
 
                 IEnumerator PlaySfxRoutine()
                 {
                     yield return new WaitForSeconds(config.vfxTime);
                     sfx.PlayOneShot(config.allCollectedSFX);
-                    isCollectSfxPlayed = true;
+                    yield return new WaitForSeconds(config.vfxTime);
+                    plus1.SetActive(false);
                 }
 
                 StartCoroutine(PlaySfxRoutine());
@@ -109,29 +134,20 @@ public class IndicatorController : MonoBehaviour
                 redoVFX.SetActive(false);
             }
 
-            for(int i =0; i< checkItems.Count; i++)
-            {
-                var checkItem = checkItems[i];
-                checkItem.isChecked = false;
-                checkItem.count = 0;
-                checkItems[i] = checkItem;
-
-                var indicateItem = Items.transform.GetChild(i).gameObject;
-                var check = indicateItem.transform.Find("check").gameObject;
-                check.SetActive(false);
-            }
-
+            RemoveOneDish();
+        
             redoCount++;
 
             StartCoroutine(PlaySfxRoutine());
         }
 
-        OnIndicatorStateUpdate?.Invoke(new State { checkItems = checkItems, redoCount = redoCount });
+        OnIndicatorStateUpdate?.Invoke(new State { checkItems = checkItems, redoCount = redoCount, finishedCount = finishedCount });
     }
 
     void Awake()
     {
         sfx = GetComponent<AudioSource>();
+        plus1.SetActive(false);
     }
 
     void Start()

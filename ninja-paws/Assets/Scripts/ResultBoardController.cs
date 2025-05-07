@@ -5,6 +5,7 @@ public class ResultBoardController : MonoBehaviour
 {
     [SerializeField] TMP_Text redoLabel;
     [SerializeField] GameObject Items;
+    [SerializeField] GameObject NextButton;
     GameManagerController manager;
     IndicatorController.State gameState;
     void RenderItems()
@@ -44,7 +45,9 @@ public class ResultBoardController : MonoBehaviour
         manager = GameManagerController.Instance;
         gameState = manager.gameState;
 
-        redoLabel.text = $"Redo {gameState.redoCount.ToString()} times";
+        redoLabel.text = $"{gameState.finishedCount} finished, {gameState.redoCount} ruined";
+
+        NextButton.SetActive(gameState.finishedCount > 0);
 
         RenderItems();
     }
