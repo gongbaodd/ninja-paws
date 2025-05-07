@@ -44,7 +44,7 @@ export default function PoseDetection() {
   return (
     <>
       <Game cursorPos={cursorPos} mask={mask} onSetMotion={onSetMotion} />
-      <div className={"flex pose " + (!isDEV && "hide")}>
+      <div className={"flex pose " + (isDEV? "":"hide")}>
         <video ref={videoRef} autoPlay playsInline></video>
         <canvas ref={canvasRef} width={1280} height={720}></canvas>
       </div>

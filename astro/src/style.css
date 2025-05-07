@@ -14,6 +14,8 @@
         width: 1280px;
         height: 720px;
     }
+
+    display: none;
 }
 
 .pose.hide {
@@ -29,6 +31,8 @@ body {
     justify-content: center;
     display: flex;
     height: 100vh;
+    flex-direction: column;
+    background-color: black;
 }
 
 
@@ -36,8 +40,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 
     iframe {
         border: 0;
+        width: 1280px;
+        height: 720px;
     }
 }

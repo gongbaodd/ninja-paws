@@ -27,6 +27,7 @@ export interface MotionMsg {
 
 export default function Game(props: GameProps) {
     const frameRef = useRef<HTMLIFrameElement>(null);
+    const gameRef = useRef<HTMLDivElement>(null);
 
     const cursorPosMsg: CursorPosMsg = {
         type: "cursorPos",
@@ -68,7 +69,7 @@ export default function Game(props: GameProps) {
 
     return (
         <div className="game">
-            {!isDEV && <iframe ref={frameRef} title="game" src="./game/index.html" width="1280" height="720" />}
+            {<iframe ref={frameRef} title="game" src="./game/index.html" width="1280" height="720" />}
             {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} onSetMotion={props.onSetMotion} />}
         </div>
     );
