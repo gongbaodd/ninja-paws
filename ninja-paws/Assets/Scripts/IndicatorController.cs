@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class IndicatorController : MonoBehaviour
@@ -45,11 +46,14 @@ public class IndicatorController : MonoBehaviour
 
         for (int i = 0; i < dish.ingredients.Length; i++)
         {
-            var itemName = dish.ingredients[i].itemName;
+            var ingredient = dish.ingredients[i];
+            var itemName = ingredient.itemName;
             var item = Items.transform.GetChild(i).gameObject;
             var label = item.transform.GetChild(0).GetComponent<TMP_Text>();
             label.text = itemName;
             item.name = itemName;
+
+            item.GetComponent<Image>().sprite = ingredient.sprite;
 
             checkItems.Add(new CheckItem { itemName = itemName, isChecked = false, count = 0 });
         }
