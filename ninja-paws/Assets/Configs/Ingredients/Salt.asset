@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c982ed75489944cb7a4568b1a92631, type: 3}
   m_Name: Salt
   m_EditorClassIdentifier: 
-  itemName: 'Salt  '
+  itemName: Salt
   sprite: {fileID: 21300000, guid: 286398d83cbce504db64a1f66e8aec84, type: 3}
   speed: 15
   torque: 0.1
