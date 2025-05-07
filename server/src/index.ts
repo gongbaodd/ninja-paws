@@ -1,9 +1,14 @@
 import ModelClient, { isUnexpected } from '@azure-rest/ai-inference';
 import { AzureKeyCredential } from '@azure/core-auth';
 import { env } from 'cloudflare:workers';
-import { AutoRouter } from 'itty-router'; // ~1kB
+import { AutoRouter, cors  } from 'itty-router'; // ~1kB
 
-const router = AutoRouter();
+const { preflight, corsify } = cors()
+
+const router = AutoRouter({
+	before: [preflight],  // add preflight upstream
+	finally: [corsify],   // and corsify downstream
+});
 const GITHUB_TOKEN = env.GITHUB_TOKEN;
 
 const foods = ['Boiled Potatoes with Dill', 'Potato Salad', 'Beetroot Salad'];
