@@ -360,6 +360,8 @@ MonoBehaviour:
   plate: {fileID: 885854045}
   lockObj: {fileID: 594236381}
   PlayButton: {fileID: 2145898217}
+  index: 0
+  length: 0
 --- !u!1 &739055712
 GameObject:
   m_ObjectHideFlags: 0

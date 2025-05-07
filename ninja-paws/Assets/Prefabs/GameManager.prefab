@@ -55,6 +55,7 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 70222ec3682b3334f89e3c7adeb7b62f, type: 2}
   ingredients: []
   dishIndex: 0
+  lastUnlockedDishIndex: 0
   useMotion: 0
   bgm: {fileID: 6790827734732212246}
   KeepSpawnIngredients: 0
@@ -92,38 +93,38 @@ MonoBehaviour:
   levelMenuScene:
     m_AssetGUID: 6f7793c566a643346a8db313c18a7e13
     m_SubObjectName: 
-    m_SubObjectGUID: 
     m_SubObjectType: 
+    m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   startScene:
     m_AssetGUID: ba7c39b1360340646af7925e6a049448
     m_SubObjectName: 
-    m_SubObjectGUID: 
     m_SubObjectType: 
+    m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   gameScene:
     m_AssetGUID: f167291aaeb67bf49afd75eb7ef03c4b
     m_SubObjectName: 
-    m_SubObjectGUID: 
     m_SubObjectType: 
+    m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   endScene:
     m_AssetGUID: 62586a229c13cfd4b8fb65d06943b52f
     m_SubObjectName: 
-    m_SubObjectGUID: 
     m_SubObjectType: 
+    m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   introScene:
     m_AssetGUID: be7bde9b7215209498b8fd92e604d7ca
     m_SubObjectName: 
-    m_SubObjectGUID: 
     m_SubObjectType: 
+    m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   winScene:
     m_AssetGUID: 65df2b07d4e1ac244a678f455c3e0101
     m_SubObjectName: 
-    m_SubObjectGUID: 
     m_SubObjectType: 
+    m_SubObjectGUID: 
     m_EditorAssetChanged: 0
 --- !u!120 &7574563614239261300
 LineRenderer:
