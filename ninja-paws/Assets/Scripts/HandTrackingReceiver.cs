@@ -125,16 +125,22 @@ public class HandTrackingReceiver : MonoBehaviour
 
     private Texture2D previousTexture = null;
     public static Vector3 DesiredCurPosition { get; private set; }
+    void CloseWebSocket() {
+#if UNITY_EDITOR
+            DesposeServer();
+#endif
+    }
+    void StopiFrameData() {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        StopMotionTracking();
+#endif
+    }
     public void ToggleService()
     {
         if (manager.useMotion)
         {
-#if UNITY_EDITOR
-            DesposeServer();
-#endif
-#if UNITY_WEBGL && !UNITY_EDITOR
-            StopMotionTracking();
-#endif
+            CloseWebSocket();
+            StopiFrameData();
             DesiredCurPosition = Vector3.zero;
         }
         else

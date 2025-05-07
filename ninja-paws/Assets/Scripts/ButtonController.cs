@@ -72,8 +72,6 @@ public class ButtonController : MonoBehaviour
     {
 
         var sceneController = manager.GetComponent<SceneManagerController>();
-        print("sceneManager" + sceneController.isLoading);
-        print("isSlicable" + isSlicable);   
 
         if (sceneController.isLoading) return;
         if (!isSlicable) return;

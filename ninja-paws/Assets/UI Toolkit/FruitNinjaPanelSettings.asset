@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   themeUss: {fileID: -4733365628477956816, guid: d7580efd2f589fa45bf367ab5c9e8329, type: 3}
   m_DisableNoThemeWarning: 0
-  m_TargetTexture: {fileID: 8400000, guid: 56472cc5323849040a97a8810e090ec2, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 867b2e09bfe8e0e4588790286c53780c, type: 2}
   m_RenderMode: 0
   m_WorldSpaceLayer: 0
   m_ScaleMode: 2
