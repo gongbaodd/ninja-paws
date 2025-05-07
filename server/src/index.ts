@@ -11,7 +11,13 @@ const foods = ['Boiled Potatoes with Dill', 'Potato Salad', 'Beetroot Salad'];
 interface Query {
 	finishedCount: number;
 	ruinedCount: number;
-	leftIngredients: Record<string, number>;
+	// left ingredients
+	Potatoes: number;
+	Salt: number;
+	Dill: number;
+	Mayonnaise: number;
+	Pickles: number;
+	Beets: number;
 }
 
 const systemContent = `You are a sarcastic, rude, and mean restaurant manager in a cooking-themed game.
@@ -29,10 +35,28 @@ Examples of acceptable responses:
 
 const userContentCreater = (name: string, query: Query) => {
 	let left = '';
-	for (const [key, value] of Object.entries(query.leftIngredients)) {
-		if (value > 0) {
-			left += `${key} (${value}), `;
-		}
+	if (query.Potatoes > 0) {
+		left += `${query.Potatoes} Potatoes, `;
+	}
+	if (query.Salt > 0) {
+		left += `${query.Salt} Salt, `;
+	}
+	if (query.Dill > 0) {
+		left += `${query.Dill} Dill, `;
+	}
+	if (query.Mayonnaise > 0) {
+		left += `${query.Mayonnaise} Mayonnaise, `;
+	}
+	if (query.Pickles > 0) {
+		left += `${query.Pickles} Pickles, `;
+	}
+	if (query.Beets > 0) {
+		left += `${query.Beets} Beets, `;
+	}
+	if (left.length > 0) {
+		left = left.slice(0, -2);
+	} else {
+		left = 'nothing';
 	}
 
 	return `I cooked ${name}.I finished ${query.finishedCount} dishes, ruined ${query.ruinedCount} dish, and I have ${left} left.`;
