@@ -67,8 +67,8 @@ export default function Game(props: GameProps) {
     }, []);
 
     return (
-        <div>
-            {!isDEV &&<iframe ref={frameRef} title="game" src="./game/index.html" width="1300" height="780" />}
+        <div className="game">
+            {!isDEV && <iframe ref={frameRef} title="game" src="./game/index.html" width="1280" height="720" />}
             {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} onSetMotion={props.onSetMotion} />}
         </div>
     );
