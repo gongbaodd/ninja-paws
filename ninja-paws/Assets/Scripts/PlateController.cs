@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlateController : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class PlateController : MonoBehaviour
 
             if (ingredient.sprite)
             {
-                item.GetComponent<SpriteRenderer>().sprite = ingredient.sprite;
+                item.GetComponent<Image>().sprite = ingredient.sprite;
             }
             var label = item.transform.GetChild(0).GetComponent<TMP_Text>();
             label.text = ingredient.itemName;

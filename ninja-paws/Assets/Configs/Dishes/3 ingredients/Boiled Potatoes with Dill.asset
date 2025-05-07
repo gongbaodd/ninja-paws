@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boiled Potatoes with Dill
   m_EditorClassIdentifier: 
   itemName: Boiled Potatoes with Dill
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 43b6c7c9c966b0049814050450b6413f, type: 3}
   ingredients:
   - {fileID: 11400000, guid: 23125bccccba96446bd718d2cd7d9e1f, type: 2}
   - {fileID: 11400000, guid: d5cb233b1e1ef8a40a545a5639504a7b, type: 2}

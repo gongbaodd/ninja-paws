@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
@@ -53,7 +54,7 @@ public class IngredientController : MonoBehaviour
 
         if (config.sprite)
         {
-            item.GetComponent<SpriteRenderer>().sprite = config.sprite;
+            item.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = config.sprite;
         }
         
         var spawnWidth = gameConfig.spawnWidth;
