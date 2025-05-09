@@ -22,11 +22,8 @@ public class SceneManagerController : MonoBehaviour
 
     async Task LoadSceneAsync(AssetReference scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
-        if (loadHandler.IsValid())
-        {
-            var unLoadHandle = Addressables.UnloadSceneAsync(loadHandler, true);
-            await unLoadHandle.Task;
-        }
+        var downloadHandle = Addressables.DownloadDependenciesAsync(scene);
+        await downloadHandle.Task;
 
         loadHandler = scene.LoadSceneAsync(mode, true);
         await loadHandler.Task;
