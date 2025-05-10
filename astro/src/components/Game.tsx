@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import WebSocketComponent from "./WebSocket";
 const isDEV = import.meta.env.DEV;
-console.log(import.meta.env)
+const isTest = import.meta.env.MODE == "test";
 
 interface GameProps {
     cursorPos: { x: number; y: number };
@@ -28,7 +28,6 @@ export interface MotionMsg {
 
 export default function Game(props: GameProps) {
     const frameRef = useRef<HTMLIFrameElement>(null);
-    const gameRef = useRef<HTMLDivElement>(null);
 
     const cursorPosMsg: CursorPosMsg = {
         type: "cursorPos",
@@ -58,7 +57,7 @@ export default function Game(props: GameProps) {
         const handleMessage = (event: MessageEvent) => {
             if (event.origin !== location.origin) return;
             const { type, data } = event.data;
-    
+
             if (type === "motion") {
                 props.onSetMotion(data);
             }
@@ -68,16 +67,17 @@ export default function Game(props: GameProps) {
         return () => window.removeEventListener("message", handleMessage);
     }, []);
 
-    const Game = () => {
+    const Unity = useCallback(() => {
+        if (isDEV && !isTest) return null;
         return (
             <iframe ref={frameRef} title="game" src="./game/index.html" width="1280" height="720" />
         );
-    }
+    }, [])
 
     return (
         <div className="game">
-            <Game />
-            {isDEV && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} onSetMotion={props.onSetMotion} />}
+            <Unity />
+            {isDEV && !isTest && <WebSocketComponent cursorPosMsg={cursorPosMsg} maskMsg={maskMsg} onSetMotion={props.onSetMotion} />}
         </div>
     );
 }
