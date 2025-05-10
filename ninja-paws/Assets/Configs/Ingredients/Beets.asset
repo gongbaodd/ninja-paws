@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Beets
   m_EditorClassIdentifier: 
   itemName: Beets
-  sprite: {fileID: 21300000, guid: 91050acd4270e3746931c369b9e7a1b8, type: 3}
+  sprite: {fileID: 21300000, guid: 66eae3137d5a83e41beca3ffcdc137c1, type: 3}
   speed: 15
   torque: 0.1

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pickles
   m_EditorClassIdentifier: 
   itemName: Pickles
-  sprite: {fileID: 21300000, guid: 28ea98f16e791f34398802b5d357c092, type: 3}
+  sprite: {fileID: 21300000, guid: c0523d7d60464e74783916aa371f07b8, type: 3}
   speed: 15
   torque: 0.1

@@ -90,7 +90,7 @@ public class ResultBoardController : MonoBehaviour
         string comment = await GetManagerComment();
         if (comment != null)
         {
-            ManagerComment.text = $"Manager: \n {comment}";
+            ManagerComment.text = $"Health Inspector: \n {comment}";
         }
     }
 

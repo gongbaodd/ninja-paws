@@ -716,11 +716,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9107827702236808809, guid: edfe24d7fa8f1c44c8e4a0c871b704a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5
+      value: -2.9
       objectReference: {fileID: 0}
     - target: {fileID: 9107827702236808809, guid: edfe24d7fa8f1c44c8e4a0c871b704a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 9107827702236808809, guid: edfe24d7fa8f1c44c8e4a0c871b704a0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1586,10 +1586,6 @@ PrefabInstance:
     - target: {fileID: 1715177953693793515, guid: 3f0c276425c6cf2449b6ad3e3382b3b5, type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842977931272777177, guid: 3f0c276425c6cf2449b6ad3e3382b3b5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7004553388188439859, guid: 3f0c276425c6cf2449b6ad3e3382b3b5, type: 3}
       propertyPath: m_LocalPosition.x

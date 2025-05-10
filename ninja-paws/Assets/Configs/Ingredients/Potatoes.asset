@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Potatoes
   m_EditorClassIdentifier: 
   itemName: Potatoes
-  sprite: {fileID: 21300000, guid: 71f5848d408732d49a818f93afa5adef, type: 3}
+  sprite: {fileID: 21300000, guid: b7d6a7d9531c5b442a30684fc903a050, type: 3}
   speed: 15
   torque: 0.1

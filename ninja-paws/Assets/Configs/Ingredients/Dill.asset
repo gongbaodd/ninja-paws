@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Dill
   m_EditorClassIdentifier: 
   itemName: Dill
-  sprite: {fileID: 21300000, guid: 01737e08fe86cdb4ebe3e76213b57346, type: 3}
+  sprite: {fileID: 21300000, guid: 2936114b1e909a1498381bee0e2c6195, type: 3}
   speed: 15
   torque: 0.1
