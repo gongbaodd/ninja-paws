@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Beetroot Salad
   m_EditorClassIdentifier: 
   itemName: Beetroot Salad
-  sprite: {fileID: 21300000, guid: 1cfec2d920a942a408639515dc2975a7, type: 3}
+  sprite: {fileID: 21300000, guid: faec5d805979bfa4bb9821d88245b473, type: 3}
   ingredients:
   - {fileID: 11400000, guid: 60e92446af2e35f4493bd5b9c3999832, type: 2}
   - {fileID: 11400000, guid: 23125bccccba96446bd718d2cd7d9e1f, type: 2}
