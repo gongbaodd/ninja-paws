@@ -33,7 +33,14 @@ public class SpawnerController : MonoBehaviour
     void InitPool()
     {
         bool collectionChecks = true;
-        pool = new LinkedPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, collectionChecks, poolSize);
+        pool = new LinkedPool<GameObject>(
+            CreatePooledItem,
+            OnTakeFromPool,
+            OnReturnedToPool,
+            OnDestroyPoolObject,
+            collectionChecks,
+            poolSize
+        );
     }
 
     IEnumerator SpawnRoutine() {

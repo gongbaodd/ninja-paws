@@ -114,18 +114,11 @@ public class ResultBoardController : MonoBehaviour
             _ = sceneManager.GotoWinScene();
         }
     }
-    async void Start()
+    void Start()
     {
         manager = GameManagerController.Instance;
         config = manager.config;
         gameState = manager.gameState;
 
-        await RenderComment();
-
-        redoLabel.text = $"{gameState.finishedCount} finished, {gameState.redoCount} ruined";
-
-        NextButton.SetActive(gameState.finishedCount > 0);
-
-        RenderItems();
     }
 }

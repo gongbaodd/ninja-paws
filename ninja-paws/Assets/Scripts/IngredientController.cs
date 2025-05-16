@@ -36,6 +36,7 @@ public class IngredientController : MonoBehaviour
         manager = GameManagerController.Instance;
         var all = manager.ingredients.ToArray();
         var wanted = manager.WantedIngredients;
+        var unWanted = all.Where(x => !wanted.Contains(x)).ToArray();
         
         gameConfig = manager.config;
         var allWeight = gameConfig.allWeight;
@@ -49,7 +50,7 @@ public class IngredientController : MonoBehaviour
         }
         else
         {
-            config = all[Random.Range(0, all.Length)];
+            config = unWanted[Random.Range(0, unWanted.Length)];
         }
 
         if (config.sprite)
